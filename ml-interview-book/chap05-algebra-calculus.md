@@ -60,3 +60,33 @@ In low-dimensional space, create a similar joint probability distribution using 
 Why?    
 $(i)$ Captures non-linear relationships.    
 $(ii)$ Preserves both local and global structure in the low-dimensional projection.
+
+## 5.1.4 Calculus and Convex Optimization
+
+>[1] Differentiable functions: Give an example of non-differentiable functions that are frequently used in machine learning. How do we do backpropagation if those functions aren’t differentiable?
+
+ReLU and max-pooling are non-differentiable.    
+In general: Non-diff functions can allow backprop to happen using subgradients or gradient approximations.
+
+Specifically, for the two examples:    
+$(i)$ ReLU: Not differentiable at $x=0$, but differentiable everywhere else. Workaround: ReLU derivative considered either $0$ or $1$ at $x=0$. Practically, no floating value is ever exactly 0.    
+$(ii)$ MaxPool: Gradients passed only to max value, others receive 0 gradients ("argmax" trick).    
+
+>[2] Convexity: Show that the cross-entropy loss function is convex.
+
+For K-way multi-classification, the cross-entropy loss is: $L=-\sum_{i}^{K}y_i\log{\hat{y}_i}$.    
+However, the summation (for each datapoint) reduces to $L=-\log{x}$ since $y=1$ for the correct class and $y=0$ for all other classes.    
+$\frac{\partial^2 L}{\partial x^2}=\frac{1}{x^2}\geq 0$.    
+Thus, $L$ is convex for each datapoint.    
+Summation of $L$ over all datapoints will also be convex.
+
+>[4] Most ML algorithms we use nowadays use first-order derivatives (gradients) to construct the next training iteration.    
+>[ii] What are the pros and cons of second-order optimization.    
+
+
+Pros: $(i)$ Faster convergence, $(ii)$ implicit adaptive learning rates.    
+Cons: $(i)$ Computational and memory requirements for modern datasets, $(ii)$ sensitivity to Hessian approximations for complex non-convex objective functions.    
+
+>[iii] Why don’t we see more second-order optimization in practice?
+
+This question may soon become outdated. Recent optimization research (especially a few papers coming out of Google Research) suggest that modern second-order optimizers may be able to overcome computational and memory constraints and be applicable in real-world settings.
