@@ -109,17 +109,25 @@ Partial derivatives:
 
 The above SoE results in 4 solutions, which when plugged into $f(x,y)$ provides min and max values of $-1$ and $\frac{65}{16}$.
 
+<span style="color:DodgerBlue">NOTE: From this point onwards, I decided to not spend time on solving numericals and instead focus on Medium/ Hard conceptual questions.</span>.
+
 ## 5.2 Probability and Statistics
 
 ### 5.2.1.2 Probability
 
 >[7] Is it possible to transform non-normal variables into normal variables? How?
 
+It is possible.    
+First, figure out whether the variable follows a normal distribution either by visual inspection (histogram/ boxplot/ etc.) or by using the Kolmogorov Smirnov test.    
+Then, apply a Power Transform (after ensuring all variable values $>0$). Relevant function: `scipy.stats.boxcox`.
+
 >[8] When is the t-distribution useful?
 
->[9] Assume you manage an unreliable file storage system that crashed 5 times in the last year, each crash happens independently.
->[9i] What's the probability that it will crash in the next month?
->[9ii] What's the probability that it will crash at any given moment?
+When sample size is small and standard deviation is not known (and cannot be reliably estimated from small data sample).    
+Rule of thumb is to use t-distribution when 30 or fewer data samples are available. Else, use Normal distribution.
 
+> [11] Given two random variables $X$  and $Y$, we have $P(X|Y)$ and $P(Y) \forall X, Y$. How would you calculate $P(X)$?
+
+$P(X)=\sum_{Y_i\in Y} P(X|Y_i)P(Y_i)$
 
 ### 5.2.2 Stats
