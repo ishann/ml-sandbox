@@ -4,3 +4,6 @@ A potpourri of ML experiments and notes. The experiments are (mostly) correct, b
 ## ml-interview-book
 Answers to a few questions from the [ML Interview Book](https://huyenchip.com/ml-interviews-book/) by [Chip Huyen](https://huyenchip.com).
 
+## kaggle
+Understanding how real-world data science competitions work.
+

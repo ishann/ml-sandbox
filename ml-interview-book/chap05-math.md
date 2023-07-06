@@ -130,4 +130,37 @@ Rule of thumb is to use t-distribution when 30 or fewer data samples are availab
 
 $P(X)=\sum_{Y_i\in Y} P(X|Y_i)P(Y_i)$
 
+> [16] Consider a person A whose sex we don’t know. We know that for the general human height, there are two distributions: the height of males follows $h_m=\mathcal{N}(\mu_m,\sigma_m)$  and the height of females follows $h_j=\mathcal{N}(\mu_j,\sigma_j)$. Derive a probability density function to describe A’s height.
+
+Assuming that the probability of being a male in the population is $p$, the mixture distribution describing A's height will be: $ph_m+(1-p)h_j$.
+
+> [18] Given $n$ samples from a uniform distribution $[0,d]$, how do you estimate $d$? (Also known as the German tank problem)
+
+[German Tank Problem](https://en.wikipedia.org/wiki/German_tank_problem)    
+Error 404: Solution not found.    
+This question is beyond the scope of my current preparation.
+
+> [21] You decide to fly to Vegas for a weekend. You pick a table that doesn’t have a bet limit, and for each game, you have the probability p  of winning, which doubles your bet, and 1−p  of losing your bet. Assume that you have unlimited money (e.g. you bought Bitcoin when it was 10 cents), is there a betting strategy that has a guaranteed positive payout, regardless of the value of p ?
+
+(Assuming we have a _lot_ of money, and not _infinite_ money.)    
+No. A super-bad streak of losses might make you lose all money before you are able to leverage a high $p$ to leave with a positive payout.    
+
+(Assuming we have _infinite_ money.)    
+Apply the ''Martingale strategy'':    
+1. Start with an initial bet amount, $I$.
+2. If we win, restart with $I$.
+3. If we lose, double the amount and continue playing.
+4. Repeat Step 3 until we win.
+
+The idea behind the Martingale strategy is that we will eventually win and that one win covers all previous losses.
+
+>[22] Given a fair coin, what’s the number of flips you have to do to get two consecutive heads?
+
+>[23] In national health research in the US, the results show that the top 3 cities with the lowest rate of kidney failure are cities with populations under 5,000. Doctors originally thought that there must be something special about small town diets, but when they looked at the top 3 cities with the highest rate of kidney failure, they are also very small cities. What might be a probabilistic explanation for this phenomenon?
+
+Hint: The law of small numbers.
+
+>[24] Derive the maximum likelihood estimator of an exponential distribution.
+
+
 ### 5.2.2 Stats
