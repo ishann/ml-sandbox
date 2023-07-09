@@ -113,7 +113,7 @@ The above SoE results in 4 solutions, which when plugged into $f(x,y)$ provides 
 
 ## 5.2 Probability and Statistics
 
-### 5.2.1.2 Probability
+### 5.2.1 Probability
 
 >[7] Is it possible to transform non-normal variables into normal variables? How?
 
@@ -156,11 +156,32 @@ The idea behind the Martingale strategy is that we will eventually win and that 
 
 >[22] Given a fair coin, what’s the number of flips you have to do to get two consecutive heads?
 
+
+Let $X$ be the expected number of flips for two consecutive heads.    
+Let's model the first two tosses through 4 equally likely events ($P(X_i)=0.25$):    
+$\hspace{8mm}X_1:TT...$, $X_2:TH...$, $X_3:HT...$, and $X_4:HH...$.    
+$X_{1}$ has a $T$ in the first toss and results in us resetting our event of interest by 1.    
+$X_{2}$ also has a $T$ in the first toss and results in us resetting our event of interest by 1.    
+$X_3$ has a $T$ in the second flip and results in us resetting our event of interest by 2.    
+$X_4$ represent two consecutive heads and represents the event of interest.    
+Thus, $X = 0.25(X+1)+0.25(X+1)+0.25(X+2)+0.25(2) \implies X=6$.
+
+
 >[23] In national health research in the US, the results show that the top 3 cities with the lowest rate of kidney failure are cities with populations under 5,000. Doctors originally thought that there must be something special about small town diets, but when they looked at the top 3 cities with the highest rate of kidney failure, they are also very small cities. What might be a probabilistic explanation for this phenomenon?
 
-Hint: The law of small numbers.
+Small samples cannot be used to estimate population parameters since even small (random) changes may result in large fluctuations in the parameter estimate.    
+It is likely that the 6 cities stood out on the extrema of the distribution by chance.
 
 >[24] Derive the maximum likelihood estimator of an exponential distribution.
+
+$f(x,\lambda)=\lambda e^{-\lambda x} \hspace{2mm}\forall\hspace{1mm} x\in X$    
+, where $\lambda$ is the parameter whose MLE we are interested in and $X$ is the domain of the random variable $x$.    
+
+The Likelihood function for $f(x,\lambda)$ over $\{x_1, x_2, ..., x_n\}$ is: $\mathcal{L}(\lambda)=\prod_{i=1}^{n} \lambda e^{-\lambda x_i}=\lambda^n e^{-\lambda \sum_{i=1}^{n} x_i}$.    
+Log Likelihood: $\ln \mathcal{L}(\lambda)=n\ln \lambda - \lambda \sum_{i=1}^{n} x_i$.    
+Setting derivative of Log Likelihood to 0:
+$\frac{\partial \ln \mathcal{L}(\lambda)}{\partial \lambda}=\frac{n}{\lambda}-\sum_{i=1}^{n} x_i=0 \implies \lambda=\frac{n}{\sum_{i=1}^{n} x_i}$.    
+Thus, MLE estimate for Exponential Distribution: $\lambda=\frac{n}{\sum_{i=1}^{n} x_i}$.
 
 
 ### 5.2.2 Stats
