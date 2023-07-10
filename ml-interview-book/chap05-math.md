@@ -1,3 +1,5 @@
+**NOTE**: GitHub CoPilot helped typeset a lot of the text and most of the equations.
+
 # Chapter 5: Math
 
 ## Resources:
@@ -185,3 +187,39 @@ Thus, MLE estimate for Exponential Distribution: $\lambda=\frac{n}{\sum_{i=1}^{n
 
 
 ### 5.2.2 Stats
+> [3] When should we use median instead of mean? When should we use mean instead of median?
+
+The mean is useful when:
+1. Data distribution is symmetric and there are no outliers.
+2. Data type is numeric or ordinal.
+3. The mean is more efficient to compute compared to the median ($O(n)$ vs. $O(n\log{n})$).
+
+The median is useful when:
+1. Outliers result in the mean no longer being a measure of central tendency.
+2. Data distribution is skewed and (again) the mean is no longer a measure of central tendency. 
+3. If data type is nominal.
+
+> [4] What is a moment of function? Explain the meanings of the zeroth to fourth moments.    
+
+The moment of a function is a quantity that describes the function's shape/ behavior, quantifying how the function's values will be distributed around a point or an axis.    
+1. The $0^{th}$ moment is the area under the curve of the function, representing the total mass or probability of the function.
+2. The $1^{st}$ moment is the center of mass of the function, representing the expected value or the mean.
+3. The $2^{nd}$ moment is the variance, representing the spread or dispersion of the function from the first moment. 
+4. The $3^{rd}$ moment is the skewness of the function, representing the asymmetry of the function (quantifying the skew to the left or the right of the mean). 
+5. The $4^{th}$ moment is the kurtosis of the function, representing the shape of the function (quantifying the heaviness of the tails and the peakness of the distribution relative to a normal distribution).    
+`NOTE`: I have _never_ used the $3^{rd}$ and $4^{th}$ moments in practice.
+
+> [5] Are independence and zero covariance the same? Give a counterexample if not.
+
+Covariance only checks for linear dependence between two variables.
+Independence checks for _any_ type of dependence between two variables.    
+Example: Let $x\in X$ be drawn from a standardized normal distribution. $f_1=x$ and $f_2=x^2$ have 0 covariance but are clearly not independent. 
+
+> [7] Suppose that we examine 100 newborn puppies and the 95% confidence interval for their average weight is  $[0.9,1.1]$  pounds. Which of the following statements is true?    
+> [i] Given a random newborn puppy, its weight has a 95% chance of being between 0.9 and 1.1 pounds.    
+> [ii] If we examine another 100 newborn puppies, their mean has a 95% chance of being in that interval.    
+> [iii] We're 95% confident that this interval captured the true mean weight.
+
+> [8] Suppose we have a random variable supported on from which we can draw samples. How can we come up with an unbiased estimate of the median of ?
+
+> [9] Can correlation be greater than 1? Why or why not? How to interpret a correlation value of 0.3?
