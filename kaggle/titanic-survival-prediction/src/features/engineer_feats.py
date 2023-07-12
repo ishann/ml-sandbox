@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+
 def str_to_numeric(df):
     """
     Convert string values to numeric values.
@@ -18,6 +19,7 @@ def str_to_numeric(df):
                             inplace=True)
 
     return df
+
 
 def impute_age(df_trn, df_tst):
     """
@@ -52,6 +54,7 @@ def impute_age(df_trn, df_tst):
                         lambda x: fill_missing_age(x, med_age))["Age"]
     
     return df_trn, df_tst
+
 
 def impute_cabin(df_trn, df_tst):
     """
@@ -90,6 +93,8 @@ def impute_cabin(df_trn, df_tst):
     
     df_trn["Cabin"] = df_trn["Cabin"].apply(
                         lambda x: discretize_cabin(x)).astype("string").map(mapper)
+    df_tst["Cabin"] = df_tst["Cabin"].apply(
+                        lambda x: discretize_cabin(x)).astype("string").map(mapper)
     
     df_trn["Cabin"] = df_trn.groupby(["Pclass"])["Cabin"].apply(lambda x: x.fillna(x.median()))
     
@@ -105,5 +110,54 @@ def impute_cabin(df_trn, df_tst):
     df_tst["Cabin"] = df_tst.groupby("Pclass").apply(
                         lambda x: fill_missing_cabin(x, med_cabin))["Cabin"]
     
+    df_trn["Cabin"] = df_trn["Cabin"].astype(int)
+    df_tst["Cabin"] = df_tst["Cabin"].astype(int)
+
     return df_trn, df_tst
+
+
+def impute_embarked(df):
+    """
+    1. Look for correlated features.
+    2. Use median of the top-2 significantly correlated features to fill val.
+    """
+    print(df.corr(numeric_only=True)["Embarked"].abs().sort_values(ascending=False)[1:])
+    print("=> Cabin and Pclass are significantly correlated.")
+
+    # Since both Embarked missing records have the same (Cabin, Pclass) values: (1.0, 1),
+    # fill with the median Embarked for those values.
+
+    median_emb = df.groupby(["Cabin", "Pclass"])["Embarked"].median()
+    fill_missing_emb = int(median_emb[(1.0,1)])
+
+    df["Embarked"] = df["Embarked"].replace({0:fill_missing_emb})
+
+    return df
+
+
+def impute_fare(df_trn, df_tst):
+    """
+    Only df_tst has missing value(s). df_trn has been passed in because all 
+    statistics must be computed only on the training distribution.
+    """
+
+    print(df_trn.corr(numeric_only=True)["Fare"].abs().sort_values(ascending=False)[1:])
+    print("=> Cabin and Pclass are highly correlated with Fare.")
+
+    # Use medians from df_trn to fill missing values in df_tst.
+    def fill_missing_fare(df, med_fare):
+        
+        cabin, pclass = df["Cabin"].values[0], df["Pclass"].values[0]
+        fare = med_fare[(cabin, pclass)]
+        
+        df["Fare"].fillna(fare, inplace=True)
     
+        return df
+    
+    med_fare = df_trn.groupby(["Cabin", "Pclass"])["Fare"].median() 
+    
+    df_tst["Fare"] = df_tst.groupby(["Cabin", "Pclass"]).apply(
+                        lambda x: fill_missing_fare(x, med_fare))["Fare"]
+    
+    return df_tst
+
