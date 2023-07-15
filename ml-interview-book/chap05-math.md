@@ -238,4 +238,28 @@ No, correlation cannot be greater than $1$. It will be equal to $1$ when $X$ and
 Geometric view: Let $X$ and $Y$ be vectors in Euclidean space. The correlation between $X$ and $Y$ is the cosine of the angle between the to vectors.    
 Thus, a correlation value of $0.3$ corresponds to an angle $\theta=\cos^{-1}{0.3}$ between $X$ and $Y$.
 
+> [11] Tossing a coin ten times resulted in 7 heads and 3 tails. How would you analyze whether the coin is fair?
 
+Use the binomial test.
+Null hypothesis: P(head-fair)$=\frac{1}{2}$    
+P(head-observed) = $^{n}C_k \times p^k \times (1-p)^{n-k} = ^{10}C_7 \times 0.5^7 \times (1-0.5)^{10-7} = 0.12$.    
+Traditionally, online software would take P(head-true) and P(head-observed) as input and compute the $p-val$.    
+Instead, consider using `scipy.stats.binomtest` to compute the significance of the null hypothesis, which yields $p_{val}=0.34$.    
+Since $p_{val}$ is fairly high, we accept the null hypothesis, ie, deem the coin to be fair.
+
+`NOTE`: 10 tosses isn't really a lot of tosses. Observing 70 heads in 100 tosses would have resulted in strongly rejecting the null hypothesis ($7.85e^{-05}$).
+
+> [12] Statistical significance.    
+> [i] How do you assess the statistical significance of a pattern whether it is a meaningful pattern or just by chance?    
+> [ii] What’s the distribution of p-values?    
+> [iii] Recently, a lot of scientists started a war against statistical significance. What do we need to keep in mind when using p-value and statistical significance?    
+
+[i] Null-hypothesis statistically significance testing uses the *p-value* to determine if a result is meaningful pattern or just by chance. The p-value represents *the probability of obtaining test results at least as extreme as the result actually observed, under the assumption that the null hypothesis is correct* - [Wikipedia](https://en.wikipedia.org/wiki/P-value).    
+[ii] The distribution of p-values is uniform (when the null-hypothesis is true). See [this](https://stats.stackexchange.com/a/10617) for a discussion on the conditions under which this statement holds.    
+[iii] **(a)** Effect Size: Measure strength of the relationship between variables; consider the effect size alongside the p-value to understand the practical significance of the findings. Small p-values with tiny effect sizes may be inconsequential. **(b)** Context and Interpretation: Interpret statistical significance in the context of the RQ and the study design, conditioned on prior knowledge, theoretical expectations, and a holistic understanding of the field of study. **(c)** Reproducibility: Reproducibility is non-negotiable. Use complementary methods (to p-val) to assess the robustness of findings (cross validation, bootstrapping, etc.).
+
+
+> [13] Variable correlation.    
+> [i] What happens to a regression model if two of their supposedly independent variables are strongly correlated?    
+> [ii] How do we test for independence between two categorical variables?    
+> [iii] How do we test for independence between two continuous variables?
