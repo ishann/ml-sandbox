@@ -220,6 +220,22 @@ Example: Let $x\in X$ be drawn from a standardized normal distribution. $f_1=x$ 
 > [ii] If we examine another 100 newborn puppies, their mean has a 95% chance of being in that interval.    
 > [iii] We're 95% confident that this interval captured the true mean weight.
 
-> [8] Suppose we have a random variable supported on from which we can draw samples. How can we come up with an unbiased estimate of the median of ?
+''A confidence interval refers to the long-term success rate of the method, that is, how often this type of interval will capture the parameter of interest.'' - [Khan Academy](https://www.khanacademy.org/math/ap-statistics/xfb5d8e68:inference-categorical-proportions/introduction-confidence-intervals/a/interpreting-confidence-levels-and-confidence-intervals).    
+[i] is referring to samples and the sample mean.    
+[ii] is referring to a future sampling.    
+[iii] is correct based on the above definition of confidence intervals.
+
+> [8] Suppose we have a random variable $x$ supported on $[0,1]$ from which we can draw samples. How can we come up with an unbiased estimate of the median of $x$?
+
+It is not possible to obtain an unbiased estimate of the median of a random variable by sampling (since we cannot be sure that the distribution is not skewed).    
+Counterfactual: For a fixed median, we can transform the probability density on both sides of the median. Any estimator where mean equals median will have a corresponding alternate distribution where mean does not equal median, thus making the estimator biased.    
+Reference: [stats.statexchange.com](https://stats.stackexchange.com/a/36177)
+
 
 > [9] Can correlation be greater than 1? Why or why not? How to interpret a correlation value of 0.3?
+
+No, correlation cannot be greater than $1$. It will be equal to $1$ when $X$ and $Y$ are identical (upto a multiplicative factor).    
+Geometric view: Let $X$ and $Y$ be vectors in Euclidean space. The correlation between $X$ and $Y$ is the cosine of the angle between the to vectors.    
+Thus, a correlation value of $0.3$ corresponds to an angle $\theta=\cos^{-1}{0.3}$ between $X$ and $Y$.
+
+
