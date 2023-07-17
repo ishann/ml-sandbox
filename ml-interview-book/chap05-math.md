@@ -258,8 +258,11 @@ Since $p_{val}$ is fairly high, we accept the null hypothesis, ie, deem the coin
 [ii] The distribution of p-values is uniform (when the null-hypothesis is true). See [this](https://stats.stackexchange.com/a/10617) for a discussion on the conditions under which this statement holds.    
 [iii] **(a)** Effect Size: Measure strength of the relationship between variables; consider the effect size alongside the p-value to understand the practical significance of the findings. Small p-values with tiny effect sizes may be inconsequential. **(b)** Context and Interpretation: Interpret statistical significance in the context of the RQ and the study design, conditioned on prior knowledge, theoretical expectations, and a holistic understanding of the field of study. **(c)** Reproducibility: Reproducibility is non-negotiable. Use complementary methods (to p-val) to assess the robustness of findings (cross validation, bootstrapping, etc.).
 
-
 > [13] Variable correlation.    
 > [i] What happens to a regression model if two of their supposedly independent variables are strongly correlated?    
 > [ii] How do we test for independence between two categorical variables?    
 > [iii] How do we test for independence between two continuous variables?
+
+[i] Multi-collinearity causes overfitting and makes it difficult to interpret the regressor. Fix by removing/ combining variables, using regularization, or applying dimensionality reduction (which implicitly combines variables).    
+[ii] Apply the Chi-squared Test. [Wikipedia](https://en.wikipedia.org/wiki/Chi-squared_test).    
+[iii] Quite difficult to solve for the general case. To begin, inspect scatter plots. Computing Pearson's correlation co-efficient can help (0 correlation *may* be independence). Distance correlation, implemented in [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.correlation.html), goes beyond Pearson's correlation co-efficient in measuring independence.
