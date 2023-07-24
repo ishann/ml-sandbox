@@ -266,3 +266,21 @@ Since $p_{val}$ is fairly high, we accept the null hypothesis, ie, deem the coin
 [i] Multi-collinearity causes overfitting and makes it difficult to interpret the regressor. Fix by removing/ combining variables, using regularization, or applying dimensionality reduction (which implicitly combines variables).    
 [ii] Apply the Chi-squared Test. [Wikipedia](https://en.wikipedia.org/wiki/Chi-squared_test).    
 [iii] Quite difficult to solve for the general case. To begin, inspect scatter plots. Computing Pearson's correlation co-efficient can help (0 correlation *may* be independence). Distance correlation, implemented in [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.correlation.html), goes beyond Pearson's correlation co-efficient in measuring independence.
+
+> [15] You want to test which of the two ad placements on your website is better. How many visitors and/or how many times each ad is clicked do we need so that we can be 95% sure that one placement is better?
+
+Run an A/B test.    
+The Q asks us to test if ad A results in a higher click-through rate (CTR) than ad B with $p<0.05$.    
+Run statistical hypothesis testing using a one-tailed independent t-test, where $H_0:\mu_A=\mu_B$ and $H_{alt}:\mu_A>\mu_B$.
+
+> [16] Your company runs a social network whose revenue comes from showing ads in newsfeed. To double revenue, your coworker suggests that you should just double the number of ads shown. Is that a good idea? How do you find out?
+
+A linear relationship between revenue and $\#$ ads shown is too simplistic an assumption. It depends on ad relevance, users' ad tolerance, users' ad engagement ads, etc.    
+Run an A/B test with revenue as the target variable, while also measuring user engagement. Mixed-methods research can be helpful sometimes; without significantly affecting user experience, I would also consider getting direct feedback from a subset of the users on $\#$ ads shown.
+
+> [17]Imagine that you have the prices of 10,000 stocks over the last 24 month period and you only have the price at the end of each month, which means you have 24 price points for each stock. After calculating the correlations of 10,000 * 9,9992 pairs of stock, you found a pair that has the correlation to be above 0.8.    
+> [i] What’s the probability that this happens by chance?    
+> [ii] How to avoid this kind of accidental patterns?
+
+
+> [18] How are sufficient statistics and Information Bottleneck Principle used in machine learning?
