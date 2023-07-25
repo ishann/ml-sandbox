@@ -14,7 +14,7 @@ A chatbot that talks to a user conditioned on **multiple** PDF documents.
 ## lit-bot
 `NOTE`: Just a stub in the README for now.    
 Scrape ArXiV daily. Compute text embeddings for PDF. Send 5 recommended readings to user inbox every day.    
-**Why?** Build something useful someone other than me would use.
+**Why?** Build something useful someone other than me would use.    
 (This is a non-trivial project. Build, Docker-ize, and release. Test on every grad student we know.)
 
 
