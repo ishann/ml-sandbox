@@ -275,12 +275,12 @@ Run statistical hypothesis testing using a one-tailed independent t-test, where 
 
 > [16] Your company runs a social network whose revenue comes from showing ads in newsfeed. To double revenue, your coworker suggests that you should just double the number of ads shown. Is that a good idea? How do you find out?
 
-A linear relationship between revenue and $\#$ ads shown is too simplistic an assumption. It depends on ad relevance, users' ad tolerance, users' ad engagement ads, etc.    
-Run an A/B test with revenue as the target variable, while also measuring user engagement. Mixed-methods research can be helpful sometimes; without significantly affecting user experience, I would also consider getting direct feedback from a subset of the users on $\#$ ads shown.
-
-> [17]Imagine that you have the prices of 10,000 stocks over the last 24 month period and you only have the price at the end of each month, which means you have 24 price points for each stock. After calculating the correlations of 10,000 * 9,9992 pairs of stock, you found a pair that has the correlation to be above 0.8.    
-> [i] What’s the probability that this happens by chance?    
-> [ii] How to avoid this kind of accidental patterns?
-
+A linear relationship between revenue and number of ads shown is too simplistic an assumption. It depends on ad relevance, users' ad tolerance, users' ad engagement ads, etc.    
+Run an A/B test with revenue as the target variable, while also measuring user engagement. Mixed-methods research can be helpful sometimes; without significantly affecting user experience, I would also consider getting direct feedback from a subset of the users on the number of ads shown.
 
 > [18] How are sufficient statistics and Information Bottleneck Principle used in machine learning?
+
+Sufficient Statistics: Reduce dimensionality of data to statistical information that is necessary for estimating a particular parameter or making predictions. Useful for feature extraction, data compression, 
+concisely representing probabilistic models, etc.    
+Information Bottleneck Principle: Retain critical information while discarding irrelevant details, i.e., a tradeoff between compression (compress data to extract essential information) and prediction (retain enough information to allow for accurate prediction/ reconstruction).    
+At a high level, both identify compact and informative statistics/ representations of the input data that are critical for representation learning tasks (prediction/ reconstruction).
