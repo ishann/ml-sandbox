@@ -30,14 +30,20 @@ Even non-trivial algorithms may not give the best results. *In practice*, I have
 > [10] Parametric vs. non-parametric methods.
 > [ii] When should we use one (parametric methods) and when should we use the other (non-parametric methods)?
 
-(For brevity, assume everyone knows what parametric and non-parametric learning methoda are.)    
+(Assuming everyone knows what parametric and non-parametric learning methoda are.)    
 Parametric methods are useful for their efficiency with small sample sizes (due to prior modeling assumptions) and ease of interpretation of parameteric representations. Non-parametric methods are useful in handling complex data distributions without assumptions and due to their robustness to outliers.    
-Thus, if we have a good understanding of the underlying data distribution and are able to make reasonable assumptions about the distribution, parametric methods may be appropriate. However, non-parametric methods are more appropriate if you have limited knowledge about the underlying data distribution or it appears to be complex.
+Thus, if we have a good understanding of the underlying data distribution and are able to make reasonable assumptions about the distribution, parametric methods may be appropriate. However, non-parametric methods are more appropriate if you have limited knowledge about the underlying data distribution and/or it is a complex distribution with sufficient data to model it.
 
 
 > [11] Why does ensembling independently trained models generally improve performance?
 
+Complementary independently trained models with diverse learning strategies often compensate for individual models' weaknesses, leading to more accurate and robust predictions. Ensembles help reduce overfitting (overcoming overfitting of individual models), reduce the overall bias (by canceling out individual bias), and lend themselves to learning a more complex additive representation (combining individual predictors).
+
 > [12] Why does L1 regularization tend to lead to sparsity while L2 regularization pushes weights closer to 0?
+
+L1 regularization adds a penalty term to the loss proportional to the sum of the absolute values of the coefficients. The isosurface for the L1 norm penalty has sharp corners at the axes, which means that the loss function becomes non-differentiable at zero. This property encourages the model to drive some coefficients to exactly zero, effectively removing corresponding features from the model.
+
+L2 regularization adds a penalty term to the loss function based on the squared values of the model's coefficients. The smoothness of the isosurface for the L2 norm penalty means that there is no "sharp push" towards exactly zero weights, as is the case with L1 regularization. Instead, it gently penalizes large weights, encouraging them to be small but not exactly zero.
 
 
 ________________________________________________________________
