@@ -41,29 +41,29 @@ Complementary independently trained models with diverse learning strategies ofte
 
 > [12] Why does L1 regularization tend to lead to sparsity while L2 regularization pushes weights closer to 0?
 
-L1 regularization adds a penalty term to the loss proportional to the sum of the absolute values of the coefficients. The isosurface for the L1 norm penalty has sharp corners at the axes, which means that the loss function becomes non-differentiable at zero. This property encourages the model to drive some coefficients to exactly zero, effectively removing corresponding features from the model.
+L1 regularization adds a penalty term to the loss proportional to the sum of the absolute values of the model's coefficients. The isosurface for the L1 norm penalty has sharp corners at the axes, which means that the loss function becomes non-differentiable at zero. This property encourages the model to drive some coefficients to exactly zero, effectively removing corresponding features from the model.
 
 L2 regularization adds a penalty term to the loss function based on the squared values of the model's coefficients. The smoothness of the isosurface for the L2 norm penalty means that there is no "sharp push" towards exactly zero weights, as is the case with L1 regularization. Instead, it gently penalizes large weights, encouraging them to be small but not exactly zero.
 
-
-________________________________________________________________
-
-
 > [14] What problems might we run into when deploying large machine learning models?
 
-> [15] Your model performs really well on the test set but poorly in production.
+"Large" ML models may run into the following challenges:    
+1. Compute Constraints: May require high-performance GPUs and specialized hardware to support high data and processing throughput.    
+2. Inference Latency: High inference times, making real-time applications and low-latency requirements challenging to meet.    
+3. Edge Deployment: Large models can be problematic for deployment on devices with limited storage capacity.    
+4. Overfitting: Large ML models may overfit to the training distribution, limiting their ability to generalize to real-world distributions.    
+
+> [15] Your model performs really well on the test set but poorly in production.    
 > [i] What are your hypotheses about the causes?
+ 
+1. Distribution Shift/ Data Drift: Production data may have a different data distribution than the test set.    
+2. Overfitting: Cross-validation sanity may have been violated and the model may have been overfit to the test set.    
+3. Data Leakage: During cross-validation, data leakage between train and test sets may result in (inaccurate) high test set performance.    
 
-
-________________________________________________________________
-
-
-> [ii] How do you validate whether your hypotheses are correct?
+> [ii] How do you validate whether your hypotheses are correct?    
 > [iii] Imagine your hypotheses about the causes are correct. What would you do to address them?
 
-
 ________________________________________________________________
-
 
 ### 7.2 Sampling and creating training data
 
