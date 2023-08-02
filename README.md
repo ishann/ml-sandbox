@@ -9,7 +9,7 @@ A potpourri of ML experiments and notes. The experiments are (mostly) correct, b
 **What?** Solve a few public Kaggle competitions.    
 **Why?** Understanding how real-world data science competitions work.
 
-## explore-langchain
+## proto-langchain
 **What?** Prototype a few ideas with langchain to understand how LLM-powered applications are built.    
 **Why?** Knowing how to build LLM-powered applications is the new "Naive Bayes spam-ham detector" for MLEs.
 

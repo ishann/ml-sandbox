@@ -61,9 +61,15 @@ L2 regularization adds a penalty term to the loss function based on the squared 
 3. Data Leakage: During cross-validation, data leakage between train and test sets may result in (inaccurate) high test set performance.    
 
 > [ii] How do you validate whether your hypotheses are correct?    
+
+* Analyze test and production data distributions: Both qualitative (user-based) metrics and quantitative (statistical) metrics may be used to identify data distribution differences.
+* Analyze and monitor ML model performance: Apart from tracking model performance, consider tracking proxies such as the confidence in making predictions.
+
 > [iii] Imagine your hypotheses about the causes are correct. What would you do to address them?
 
-________________________________________________________________
+* (Model) Active Learning: Query an oracle (whoever labeled test data) for either self-assessed low confidence predictions or known (audited or user feedback-based) incorrect predictions.
+* (Model) Lifelong/ Online Learning: Update the model as it sees new (production) data. Can be trickier to implement than Active Learning.
+* (Data) Investigate reasons for the data distribution shift and attempt to bridge the gap between the distributions.
 
 ### 7.2 Sampling and creating training data
 
