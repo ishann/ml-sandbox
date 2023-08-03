@@ -71,12 +71,17 @@ L2 regularization adds a penalty term to the loss function based on the squared 
 * (Model) Lifelong/ Online Learning: Update the model as it sees new (production) data. Can be trickier to implement than Active Learning.
 * (Data) Investigate reasons for the data distribution shift and attempt to bridge the gap between the distributions.
 
+
 ### 7.2 Sampling and creating training data
 
 > [2] What is the difference between sampling with vs. without replacement? Name an example of when you would use one rather than the other?
 
+Sampling with replacement *replaces* the item into the population (each item can be sampled more than once), while sampling without replacement *removes* the item from the population (each item can be sampled exactly once). Use sampling *with replacement* when the population is significantly larger than the number of sampled items; for example, simulations or bootstrapping. Use sampling *without replacement* when avoiding duplicates to obtain a representative sample of the population; for example, human surveys or experiments
+
 > [3] Explain Markov chain Monte Carlo sampling.
 
+Given a probability distribution ($p(x)$), generally, sampling techniques sample uncorrelated samples from $p(x)$. However, MCMC sampling samples from $p(x)$ by constructing a Markov chain whose stationary distribution is tends towards $p(x)$. The Markov chain is constructed by defining a transition function ($T(x|y)$) and the Markov chain is executed until the *detailed balance condition* ($p(x)T(y|x)=p(y)T(x|y)\hspace{1mm}\forall\hspace{1mm}x, y$) is met.    
+MCMC is a class of sampling techniques; popular MCMC methods include the Metropolis-Hastings algorithm, Gibbs sampling, and Hamiltonian Monte Carlo sampling.
 
 ________________________________________________________________
 
@@ -84,3 +89,12 @@ ________________________________________________________________
 > [4] If you need to sample from high-dimensional data, which sampling method would you choose?
 
 > [5] Suppose we have a classification task with many classes. An example is when you have to predict the next word in a sentence -- the next word can be one of many, many possible words. If we have to calculate the probabilities for all classes, it’ll be prohibitively expensive. Instead, we can calculate the probabilities for a small set of candidate classes. This method is called candidate sampling. Name and explain some of the candidate sampling algorithms ([hint](https://www.tensorflow.org/extras/candidate_sampling.pdf)).
+
+
+________________________________________________________________
+
+
+> [6] Suppose you want to build a model to classify whether a Reddit comment violates the website’s rule. You have 10 million unlabeled comments from 10K users over the last 24 months and you want to label 100K of them.    
+> [i] How would you sample 100K comments to label?    
+> [ii] Suppose you get back 100K labeled comments from 20 annotators and you want to look at some labels to estimate the quality of the labels. How many labels would you look at? How would you sample them?
+[Hint](https://www.cloudresearch.com/resources/guides/sampling/pros-cons-of-different-sampling-methods/)
