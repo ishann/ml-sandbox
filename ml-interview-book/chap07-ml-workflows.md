@@ -83,18 +83,41 @@ Sampling with replacement *replaces* the item into the population (each item can
 Given a probability distribution ($p(x)$), generally, sampling techniques sample uncorrelated samples from $p(x)$. However, MCMC sampling samples from $p(x)$ by constructing a Markov chain whose stationary distribution is tends towards $p(x)$. The Markov chain is constructed by defining a transition function ($T(x|y)$) and the Markov chain is executed until the *detailed balance condition* ($p(x)T(y|x)=p(y)T(x|y)\hspace{1mm}\forall\hspace{1mm}x, y$) is met.    
 MCMC is a class of sampling techniques; popular MCMC methods include the Metropolis-Hastings algorithm, Gibbs sampling, and Hamiltonian Monte Carlo sampling.
 
-________________________________________________________________
-
-
 > [4] If you need to sample from high-dimensional data, which sampling method would you choose?
+
+Traditional sampling methods like direct sampling or grid-based methods may become infeasible with high-dimensional data due to the curse of dimensionality. Thus, MCMC methods are often used to sample from high-dimensional data distributions. The following are a few of the popular MCMC methods:
+
+1. *Metropolis-Hastings Algorithm*: Samples from new states based on a proposal distribution and builds a Markov chain based on an acceptance criterion.
+2. *Gibbs Sampling*: Assumes the distribution to be factorize-able into conditional distributions. Samples one variable at a time while keeping other variables fixed.
+3. *Hamiltonian Monte Carlo*: Samples by simulating the movement of a particle by introducing auxiliary Hamiltonian dynamics (momentum) variables, allowing it to explore the parameter space more efficiently.
 
 > [5] Suppose we have a classification task with many classes. An example is when you have to predict the next word in a sentence -- the next word can be one of many, many possible words. If we have to calculate the probabilities for all classes, it’ll be prohibitively expensive. Instead, we can calculate the probabilities for a small set of candidate classes. This method is called candidate sampling. Name and explain some of the candidate sampling algorithms ([hint](https://www.tensorflow.org/extras/candidate_sampling.pdf)).
 
+1. *Sampled Softmax*: Class probabilities are calculated only for a small random subset of the total classes. Candidate class selection happens through uniform random sampling or importance sampling.
+2. *Hierarchical Softmax*: Exploits class semantics that lend themselves to a hierarchical structure. Softmax is approximated by traversing the classes organized into a tree to evaluate only a subset of candidate classes. Reduces computation complexity from linear to logarithmic.
+3. *Negative Sampling*: Popularized by Word2Vec. Randomly select negative example classes for each positive example. Efficiently learns by training the model to differentiate between true target words and randomly sampled non-target words.
+4. *Adaptive Sampling*: Dynamically adjust distribution of candidate classes to focus on hard examples. Sampling distribution may be adjusted to give higher weightage to misclassified classes.
+
+> [6] Suppose you want to build a model to classify whether a Reddit comment violates the website’s rule. You have 10 million unlabeled comments from 10K users over the last 24 months and you want to label 100K of them.    
+
+> [i] How would you sample 100K comments to label?    
+
+
+> [ii] Suppose you get back 100K labeled comments from 20 annotators and you want to look at some labels to estimate the quality of the labels. How many labels would you look at? How would you sample them? [Hint](https://www.cloudresearch.com/resources/guides/sampling/pros-cons-of-different-sampling-methods/)
+
 
 ________________________________________________________________
 
 
-> [6] Suppose you want to build a model to classify whether a Reddit comment violates the website’s rule. You have 10 million unlabeled comments from 10K users over the last 24 months and you want to label 100K of them.    
-> [i] How would you sample 100K comments to label?    
-> [ii] Suppose you get back 100K labeled comments from 20 annotators and you want to look at some labels to estimate the quality of the labels. How many labels would you look at? How would you sample them?
-[Hint](https://www.cloudresearch.com/resources/guides/sampling/pros-cons-of-different-sampling-methods/)
+> [7] Suppose you work for a news site that historically has translated only 1% of all its articles. Your coworker argues that we should translate more articles into Chinese because translations help with the readership. On average, your translated articles have twice as many views as your non-translated articles. What might be wrong with this argument?    
+> Hint: think about selection bias.
+
+> [8] How to determine whether two sets of samples (e.g. train and test splits) come from the same distribution?
+
+
+________________________________________________________________
+
+
+> [9] How do you know you’ve collected enough samples to train your ML model?
+> [10] How to determine outliers in your data samples? What to do with them?
+
