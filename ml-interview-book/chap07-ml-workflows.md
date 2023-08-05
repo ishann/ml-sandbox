@@ -100,14 +100,28 @@ Traditional sampling methods like direct sampling or grid-based methods may beco
 
 > [6] Suppose you want to build a model to classify whether a Reddit comment violates the website’s rule. You have 10 million unlabeled comments from 10K users over the last 24 months and you want to label 100K of them.    
 
+$100k$ labels over $10k$ users $\implies$ 10 labels per user.    
+$100k$ labels over $10mil$ samples $\implies$ 1 label per 100 samples.    
+Timeperiod: $24$ months.    
+
 > [i] How would you sample 100K comments to label?    
 
+1. *Active Labeling*: Use active learning to progressively label the most informative/ low confidence predictions, and iteratively learn improved models.
+2. *Expert Human-in-the-Loop Labeling*: Involve human expert annotators to manually review comments and prioritize ones more likely to violate the site's rules. Can be used to guide Active Labeling process as well.    
+3. *Stratified Sampling + Labeling*:
+    1. *By user*: Randomly sample a proportionate number of comments from each user.
+    2. *By timeperiod*: Ensure that all temporal trends are captured and labeled for the model to learn.
 
-> [ii] Suppose you get back 100K labeled comments from 20 annotators and you want to look at some labels to estimate the quality of the labels. How many labels would you look at? How would you sample them? [Hint](https://www.cloudresearch.com/resources/guides/sampling/pros-cons-of-different-sampling-methods/)
+> [ii] Suppose you get back 100K labeled comments from 20 annotators and you want to look at some labels to estimate the quality of the labels. How many labels would you look at? How would you sample them? [Hint](https://www.cloudresearch.com/resources/guides/sampling/pros-cons-of-different-sampling-methods)
 
+*Determining sample size*: Depends upon desired confidence level, margin of error, and number of annotators.
 
-________________________________________________________________
-
+Sampling Goals:
+1. *Random Sampling*: Randomly select comments + labels for evaluation to ensure that the sampled comments are representative of the entire set.
+2. *Continuous Monitoring*: Do not wait for 100k samples to be labeled. Continuously evaluate as data is labeled to get a sense of labeling quality/ task difficulty/ etc.
+3. *Stratified Sampling by Annotator*: Ensure that each annotator's comments are proportionately sampled.
+4. *Establish Inter-Annotator Agreement Metrics*: For each comment, track inter-annotator agreement. Remodel the sampling strategy or labeling process if agreement is low.
+5. *Consider Judgement Sampling*: Depending on annotator expertise/ comment representations/ temporal trends, certain samples may be more likely to be mislabeled.
 
 > [7] Suppose you work for a news site that historically has translated only 1% of all its articles. Your coworker argues that we should translate more articles into Chinese because translations help with the readership. On average, your translated articles have twice as many views as your non-translated articles. What might be wrong with this argument?    
 > Hint: think about selection bias.
@@ -120,4 +134,7 @@ ________________________________________________________________
 
 > [9] How do you know you’ve collected enough samples to train your ML model?
 > [10] How to determine outliers in your data samples? What to do with them?
+
+
+
 
