@@ -123,11 +123,18 @@ Sampling Goals:
 4. *Establish Inter-Annotator Agreement Metrics*: For each comment, track inter-annotator agreement. Remodel the sampling strategy or labeling process if agreement is low.
 5. *Consider Judgement Sampling*: Depending on annotator expertise/ comment representations/ temporal trends, certain samples may be more likely to be mislabeled.
 
-> [7] Suppose you work for a news site that historically has translated only 1% of all its articles. Your coworker argues that we should translate more articles into Chinese because translations help with the readership. On average, your translated articles have twice as many views as your non-translated articles. What might be wrong with this argument?    
-> Hint: think about selection bias.
+> [7] Suppose you work for a news site that historically has translated only 1% of all its articles. Your coworker argues that we should translate more articles into Chinese because translations help with the readership. On average, your translated articles have twice as many views as your non-translated articles. What might be wrong with this argument?
+
+Only $1\%$ of all articles have been translated $\implies$ some heuristics (topic/ target viewership/ etc.) would have been used by human decision makers to shortlist articles that should be translated. Thus, articles concerned with more popular content may have been the ones that were deemed worth translating $\implies$ there may have been *selection bias* in choosing popular articles to be translated. The fact that they were translated is not the cause of their popularity.    
+Instead, randomly select articles for translation and perform AB testing to validate the hypothesis.
 
 > [8] How to determine whether two sets of samples (e.g. train and test splits) come from the same distribution?
 
+To determine whether two sets of samples come from the same distribution, you can use statistical tests and visualizations. Here are some common methods you can use:
+
+1. *(Qualitative) Visual Inspection*: Plot histograms or mass/ density distributions of both sets and check if they are visually similar.
+2. *(Quantitative) Statistical Tests*: Either use a Chi-Square Test for categorical data or use a Kolmogorov-Smirnov Test for continuous data to compare the distributions and apply null-hypothesis significance testing.
+3. *Machine Learning*: It may be possible to qualitatively measure similarity by treating one as training data and the other as testing data (also swap for a duplicate experiment). Use generalization performance as a measure of similarity between the distributions. However, underfitting/ overfitting due to mismatched model complexity may make this an unreliable method.
 
 ________________________________________________________________
 
