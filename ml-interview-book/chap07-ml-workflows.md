@@ -136,12 +136,44 @@ To determine whether two sets of samples come from the same distribution, you ca
 2. *(Quantitative) Statistical Tests*: Either use a Chi-Square Test for categorical data or use a Kolmogorov-Smirnov Test for continuous data to compare the distributions and apply null-hypothesis significance testing.
 3. *Machine Learning*: It may be possible to qualitatively measure similarity by treating one as training data and the other as testing data (also swap for a duplicate experiment). Use generalization performance as a measure of similarity between the distributions. However, underfitting/ overfitting due to mismatched model complexity may make this an unreliable method.
 
-________________________________________________________________
-
-
 > [9] How do you know you’ve collected enough samples to train your ML model?
+
+"Enough" samples depends upon problem complexity, data quality, and the desired level of model performance. A few criterions that affect required sample size:
+1. *Problem Complexity*: Complex problems may require more data to learn good representations; for example, Vision and Language tasks may require more data than tabular tasks.
+2. *Model Complexity*: More complex models require more data for generalization to avoid overfitting.
+3. *Bias and Variance*: If the model has high bias, more data will not help. If the model has high variance, more data could help.
+
+Methods to estimate when we have enough samples:
+1. *Cross Validation*: $k$-fold cross-validation over progressively more data samples can indicate when model performance due to more data plateaus.
+2. *Statistical Power*: Statistical power analysis can be used to determine the minimum sample size required to detect a given effect size with a given degree of confidence.
+3. *VC Dimension*: This may not be practical for complex models, but the VC dimension is a measure of the complexity of the model, and can be used to determine the minimum number of samples required to learn a model with a given degree of confidence.
+
 > [10] How to determine outliers in your data samples? What to do with them?
 
+How to determine outliers:
+1. *Visualization*:
+   1. *Plots*: Visually inspect histograms, scatter plots, and density plots.
+   2. *Box Plots and Inter-Quartile Range*: Observe the median and median, and inter-quartile ranges in box-and-whisker plots to detect outliers.
+2. *Z-Scores*: Compute z-score for each sample. Depending on the data distribution and other factors such as noise, a z-score greater than 2 or 3 may indicate an outlier.
+3. *DBSCAN*: Density-based clustering algorithms can be used to detect outliers.
+
+What to do with outliers:
+1. *Remove*: Remove if we are sure that they do not provide useful information.
+2. *Retain*: Retain if the outlier may provide valuable insights or signal unexpected events. Consider applying transformations (logarithmic, square root, Box-Cox, etc.) while retaining useful outliers.
+4. *Impute*: Impute the outlier value with a reasonable estimate based on the data distribution.
+
+_______________________________________________________________
 
 
+> [11] Sample duplication    
+> [i] When should you remove duplicate training samples? When shouldn’t you?    
+> [ii] What happens if we accidentally duplicate every data point in your train set or in your test set?
+
+
+_______________________________________________________________
+
+
+> [12] Missing data    
+> [i] In your dataset, two out of 20 variables have more than 30% missing values. What would you do?    
+> [ii] How might techniques that handle missing data make selection bias worse? How do you handle this bias?
 
