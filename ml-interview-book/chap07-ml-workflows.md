@@ -166,9 +166,18 @@ _______________________________________________________________
 
 
 > [11] Sample duplication    
+
 > [i] When should you remove duplicate training samples? When shouldn’t you?    
+
+*Removing duplicates can improve generalization* Duplicate samples can bias your model's training and evaluation, leading to overfitting on the subset of duplicate samples. Removing duplicates can help ensure that your model generalizes better to unseen data. The assumption here is that the training data duplicates do not reflect idiosyncracies that also exist in the test data.    
+*Retaining duplicates can fix imbalanced datasets* If the training data is imbalanced, removing duplicates may further exacerbate the class imbalance issue, with significantly reduced performance on the minority class(es). If the same duplication patterns exist in the test data as well, then we may want to keep the train data duplicates since they reflect idiosyncracies that also exist in the test data.    
+Strong cross-validation is critical while making changes to the benchmark data.
+
 > [ii] What happens if we accidentally duplicate every data point in your train set or in your test set?
 
+The effective number of unique datapoints remains the same.    
+*Train set*: Given the same number of training iterations, the number of training epochs halves without affecting the final model performance.    
+*Test set*: All standard evaluation metrics will measure the same performance on the duplicated test set.
 
 _______________________________________________________________
 
