@@ -179,10 +179,42 @@ The effective number of unique datapoints remains the same.
 *Train set*: Given the same number of training iterations, the number of training epochs halves without affecting the final model performance.    
 *Test set*: All standard evaluation metrics will measure the same performance on the duplicated test set.
 
-_______________________________________________________________
-
-
 > [12] Missing data    
+
 > [i] In your dataset, two out of 20 variables have more than 30% missing values. What would you do?    
+
+1. *Data Imputation*: Impute missing values using methods such as mean/ median imputation, interpolation, regression, or using k-nearest neighbors.
+2. *Feature Engineering*: Design features that capture the patterns of the missing data; for example, binary indicator variables may directly signal to the model that data is missing.    
+
+Following strict cross-validation driven methodology when dealing with missing data is critical.
+
 > [ii] How might techniques that handle missing data make selection bias worse? How do you handle this bias?
 
+1. *Data Imputation*: Imputing with mean/ median might distort the distribution of variables, leading to bias in learnt parameters and predictions. Strong cross-validation methods or more advanced imputation methods such as regression imputation may help mitigate biases.
+2. *Feature Engineering*: Introducing binary indicator variables can affect the model by introducing bias if the missingness phenomenon is correlated with the target variable. Again, strong cross-validation practices and sensitivity analysis can help us measure and mitigate such biases.
+
+
+________________________________________________
+
+
+> [13] Why is randomization important when designing experiments (experimental design)?
+
+> [14] [iii] Imagine you want to build a model to detect skin legions from images. In your training dataset, only $1%$ of your images shows signs of legions. After training, your model seems to make a lot more false negatives than false positives. What are some of the techniques you'd use to improve your model?
+
+
+________________________________________________
+
+
+> [15] Training data leakage.    
+> [i] Imagine you're working with a binary task where the positive class accounts for only 1% of your data. You decide to oversample the rare class then split your data into train and test splits. Your model performs well on the test split but poorly in production. What might have happened?    
+> [ii] You want to build a model to classify whether a comment is spam or not spam. You have a dataset of a million comments over the period of 7 days. You decide to randomly split all your data into the train and test splits. Your co-worker points out that this can lead to data leakage. How?    
+> Hint: You might want to clarify what oversampling here means. Oversampling can be as simple as dupplicating samples from the rare class.
+
+
+________________________________________________
+
+
+> [16] How does data sparsity affect your models?    
+> Hint: Sparse data is different from missing data.
+
+> [17] [iii] Feature leakage: How do you detect feature leakage?
