@@ -218,3 +218,86 @@ ________________________________________________
 > Hint: Sparse data is different from missing data.
 
 > [17] [iii] Feature leakage: How do you detect feature leakage?
+
+
+________________________________________________
+
+
+> [18] Suppose you want to build a model to classify whether a tweet spreads misinformation. You have 100K labeled tweets over the last 24 months. You decide to randomly shuffle on your data and pick 80% to be the train split, 10% to be the valid split, and 10% to be the test split. What might be the problem with this way of partitioning?
+
+> [19] You’re building a neural network and you want to use both numerical and textual features. How would you process those different features?
+
+> [20] Your model has been performing fairly well using just a subset of features available in your data. Your boss decided that you should use all the features available instead. What might happen to the training error? What might happen to the test error?    
+> Hint: Think about the curse of dimensionality: as we use more dimensions to describe our data, the more sparse space becomes, and the further are data points from each other.
+
+
+________________________________________________
+
+
+### 7.3 Objective functions, metrics, and evaluation
+
+> [3] Bias-variance trade-off    
+> [ii] How’s this tradeoff related to overfitting and underfitting?    
+> [iii] How do you know that your model is high variance, low bias? What would you do in this case?    
+> [iv] How do you know that your model is low variance, high bias? What would you do in this case?    
+
+
+________________________________________________
+
+
+> [4] Cross-validation.    
+> [ii] Why don’t we see more cross-validation in deep learning?
+
+> [5] Train, valid, test splits.    
+> [iii] Your model’s loss curves on the train, valid, and test sets look like the image below. What might have been the cause of this? What would you do?    
+<img src="https://huyenchip.com/ml-interviews-book/contents/images/image25.png" alt="train-valid-test-splits" width="400"/>
+
+
+________________________________________________
+
+
+> [7] F1 score.    
+> [ii] Can we still use F1 for a problem with more than two classes. How?    
+
+
+> [8] Given a binary classifier that outputs the following confusion matrix.    
+> |             | Predicted True | Predicted False |
+> | ----------- | -------------- | --------------- |
+> | Actual True | 30 | 20 |
+> | Actual False|  5 | 40 |    
+> [ii] What can we do to improve the model’s performance?
+
+
+________________________________________________
+
+
+> [9] Consider a classification where 99% of data belongs to class A and 1% of data belongs to class B.    
+> [i] If your model predicts A 100% of the time, what would the F1 score be? Hint: The F1 score when A is mapped to 0 and B to 1 is different from the F1 score when A is mapped to 1 and B to 0.     
+> [ii] If we have a model that predicts A and B at a random (uniformly), what would the expected F1 be?
+
+
+________________________________________________
+
+
+> [10] For logistic regression, why is log loss recommended over MSE (mean squared error)?
+
+> [11] When should we use RMSE (Root Mean Squared Error) over MAE (Mean Absolute Error) and vice versa?
+
+
+________________________________________________
+
+
+> [12] Show that the negative log-likelihood and cross-entropy are the same for binary classification tasks.
+
+> [13] For classification tasks with more than two labels (e.g. MNIST with 10 labels), why is cross-entropy a better loss function than MSE?
+
+
+________________________________________________
+
+
+> [16] MPE (Most Probable Explanation) vs. MAP (Maximum A Posteriori)    
+> [i] How do MPE and MAP differ?    
+> [ii] Give an example of when they would produce different results.
+
+> [17] Suppose you want to build a model to predict the price of a stock in the next 8 hours and that the predicted price should never be off more than 10% from the actual price. Which metric would you use? Hint: check out MAPE.
+
