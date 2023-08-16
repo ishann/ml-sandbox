@@ -5,9 +5,11 @@ Approach:
     1. Iterate through the array and create hash map for [idx, target-num].
     2. O(1) look-up if target-num in hash map.
 Time Complexity:
-
+    One-pass through the array with constant computations.
+    Thus, O(n).
 Space Complexity:
-
+    Hash-map stores upto one element corresponding to each element in nums.
+    Thus, O(n).
 """
 tests = [{"inp": {"nums":[2,7,11,15], "target":9},
          "out": [0,1]},
@@ -30,7 +32,7 @@ def execute(test):
 
     nums, target = test["inp"]["nums"], test["inp"]["target"]
     expected_out = sorted(test["out"])
-    function_out = sorted(two_sum(nums, target))
+    function_out = sorted(two_sum(nums, target)) # type: ignore
 
     if expected_out==function_out:
         print("Correct.".format(function_out))
