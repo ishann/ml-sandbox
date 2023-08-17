@@ -6,7 +6,7 @@ A potpourri of ML experiments and notes. The experiments are (mostly) correct, b
 **Why?** Revisiting a few old ML concepts to gauge interview preparedness.
 
 ## tech-interview-handbook
-***What?* Answers to a few algorithmic programming questions from [Grind75](https://www.techinterviewhandbook.org).
+***What?* Answers to a few algorithmic programming questions from [Grind75](https://www.techinterviewhandbook.org) and common [Coding Patterns](https://www.designgurus.io/course/grokking-the-coding-interview).
 **Why?** Practice to do well on the programming component of MLE interviews.
 
 ## kaggle
