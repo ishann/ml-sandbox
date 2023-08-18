@@ -1,7 +1,5 @@
-
 """
 Problem URL: https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
-
 
 Approach:
     Track two pointers for left and right.
