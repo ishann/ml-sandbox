@@ -33,8 +33,7 @@ class Solution:
     def numIslands(self, grid):
         if not grid:
             return 0
-        
-        print("In the beginning:\n{}".format(grid))
+
         count = 0
         
         for i in range(len(grid)):
@@ -45,6 +44,5 @@ class Solution:
                     # Flood fill and mark "visited".
                     self.dfs(grid, i, j)
         
-        print("At the end:\n{}".format(grid))
-        
         return count
+
