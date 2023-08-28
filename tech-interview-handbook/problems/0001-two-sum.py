@@ -37,7 +37,7 @@ def execute(test):
     if expected_out==function_out:
         print("Correct.".format(function_out))
         return 1
-    else: 
+    else:
         print("Incorrect.\nExpected {}. Got {}.".format(expected_out, function_out))
         return 0
 
