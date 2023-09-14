@@ -46,7 +46,6 @@ Multi-word Context: Given several surrounding words, predict a word: $p(w_i|w_{i
 Flip the Multi-word Context CBOW model.    
 Given a word, predict the surrounding words: $p(w_{i-2}|w_i)$, $p(w_{i-1}|w_i)$, $p(w_{i+1}|w_i)$, $p(w_{i+2}|w_i)$.    
 
-
 References:
 1. The Illustrated Word2Vec: [link](https://jalammar.github.io/illustrated-word2vec/). Jay Alammar.
 2. On Word Embeddings: [part1](https://www.ruder.io/word-embeddings-1), [part2](https://www.ruder.io/word-embeddings-softmax/), [part3](https://www.ruder.io/secret-word2vec/). Sebastian Ruder.
@@ -81,10 +80,8 @@ Decoder:
 Reference: Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention): [link](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/).
 
 ## The Illustrated Transformer
-Start with [Wikipedia](https://en.wikipedia.org/wiki/Attention_(machine_learning)).    
-Cohere has a good example-based [page](https://docs.cohere.com/docs/the-attention-mechanism) on the Attention mechanism.
 
-[link](https://jalammar.github.io/illustrated-transformer/)
+
 
 ## The Illustrated BERT, ELMo, and co.
 [link](https://jalammar.github.io/illustrated-bert/)
@@ -112,8 +109,5 @@ Cohere has a good example-based [page](https://docs.cohere.com/docs/the-attentio
 
 ## 
 [link]()
-
-
-
 
 
