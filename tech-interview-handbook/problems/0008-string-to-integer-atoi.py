@@ -38,26 +38,26 @@ class Solution:
 
         while pos<len(s):
 
-            c = str[pos]
+            c = str[pos] # type: ignore
             if state==0:
                 if c==" ":
                     state=0
                 elif c=="+" or c=="-":
                     state=1
                     sign = 1 if c=="+" else -1
-                elif c.isdigit():
+                elif c.isdigit(): # type: ignore
                     state=2
-                    val=val*10+int(c)
+                    val=val*10+int(c) # type: ignore
             elif state==1:
-                if c.isdigit():
+                if c.isdigit(): # type: ignore
                     state=2
-                    val=val*10+int(c)
+                    val=val*10+int(c) # type: ignore
                 else:
                     return 0
             elif state==2:
-                if c.isdigit():
+                if c.isdigit(): # type: ignore
                     state=2
-                    val=val*10+int(c)
+                    val=val*10+int(c) # type: ignore
                 else:
                     break
             else:
@@ -67,12 +67,8 @@ class Solution:
 
         val *= sign
 
-        value = min(value, 2**31-1)
-        value = max(-(2**31), value)
-
-
-    
-    
+        val = min(val, 2**31-1)
+        val = max(-(2**31), val)
     
     def extract_num(self, str_):
 

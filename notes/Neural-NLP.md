@@ -81,7 +81,11 @@ Reference: Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq 
 
 ## The Illustrated Transformer
 
+Transformers are encoder-decoder NMTs which benefit from parallelization of the attention mechanism.
 
+
+
+Reference: The Illustrated Transformer: [link](https://jalammar.github.io/illustrated-transformer/).
 
 ## The Illustrated BERT, ELMo, and co.
 [link](https://jalammar.github.io/illustrated-bert/)
