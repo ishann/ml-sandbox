@@ -83,12 +83,55 @@ Reference: Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq 
 
 Transformers are encoder-decoder NMTs which benefit from parallelization of the attention mechanism.
 
+Transformers are especialy good at modeling context using attention (from surrounding words/ sentences/ paragraphs) to decipher the semantics associated with a word. For example, for context resolution between "run!" v/s. "run a machine" v/s. "a long run of success".    
+Thus, attention help us move beyond _lexicographic_ similarity towards _semantic_ similarity: $\text{embeddings}\rightarrow\text{contextual embeddings}$
+
+Transformers are a type of deep learning model that have revolutionized various natural language processing tasks. They work by processing input sequences and generating output sequences through a mechanism called self-attention, which allows them to capture relationships between words or tokens in the input. 
+
+High-level summary of how transformers work:
+1. Input Representation:
+   - Let's assume we have an input sequence of tokens, where each token is represented as a vector. These input vectors are denoted as $X=[x_1, x_1, ..., x_n]$, where $n$ is the sequence length.
+2. Self-Attention Mechanism:
+   - For each token $x_i$, compute attention scores wrt all other tokens in the sequence. These _attention_ scores are computed as follows:    
+   $\text{Attention}(Q, K, V) = \text{softmax}(\frac{Q \cdot K^T}{\sqrt{d_k}}) \cdot V$    
+   where,    
+     - $Q$, $K$, and $V$ are matrices obtained by linear transformations of the input X.
+       - $Q$ represents the query vectors,
+       - $K$ represents the key vectors, and 
+       - $V$ represents the value vectors.
+     - $d_k$ is the dimensionality of the key vectors.
+   - The softmax normalized attention scores are used to weigh the value vectors, allowing the model to assign varying importance to different tokens in the input sequence when generating the output.
+3. Multi-Head Attention:
+   - To capture different types of relationships between tokens, transformers use multiple attention heads to expand the model’s ability to focus on different positions.
+   - Thus, multi-head attention results in multiple parallel _representation subspaces_.
+   - Each head has its own sets of $Q$, $K$, and $V$ matrices, and the results from all heads are concatenated and linearly transformed to obtain the final output.
+4. Positional Encoding:
+   - Transformers do not have a built-in notion of sequence order, so they use positional encodings to provide information about the positions of tokens in the input sequence. These positional encodings are added to the input embeddings: $X'=X+PE$
+5. Encoder and Decoder Stacks:
+   - Each encoder block (self-attention $\rightarrow$ ffnn) as well as decoder block (self-attention $\rightarrow$ encoder-decoder attention $\rightarrow$ ffnn) sub-layer  has a residual connection and is followed by a layer-normalization step.
+   - Transformers consist of multiple layers of encoders and decoders, which stack
+     - self-attention (both, but decoder only attends to earlier positions masking future with $-\infty$)
+     - encoder-decoder attention (decoder only -  get $Q$ from the layer below, and take $K$, $V$ from encoder stack output)
+     - feedforward (both) layers.
+6. Feedforward Layer:
+   - After the self-attention mechanism, a feedforward neural network is applied to each position independently:    
+     $\text{FFNN}(X) = W_2^T\text{ReLU}(W_1^TX + b_1)+b_2$, where $X$ is the output from the self-attention layer and $W_i$/ $b_i$ are learnable parameters.
+7. Output Generation:
+   - The final output of the transformer is obtained from the decoder's stack.
+   - A linear transformation followed by softmax produces output probabilities over the vocabulary:    
+   $\text{Output} = \text{softmax}(W^TX+b)$, where $X$ is the output from the decoder stack and $W$ and $b$ are learnable parameters.
 
 
-Reference: The Illustrated Transformer: [link](https://jalammar.github.io/illustrated-transformer/).
+References:
+1. The Illustrated Transformer: [link](https://jalammar.github.io/illustrated-transformer/).
+2. ChatGPT.
 
 ## The Illustrated BERT, ELMo, and co.
-[link](https://jalammar.github.io/illustrated-bert/)
+
+
+References:
+1. [link](https://jalammar.github.io/illustrated-bert/)
+2. ChatGPT.
 
 ## The Illustrated GPT-2 (Visualizing Transformer Language Models)
 [link](https://jalammar.github.io/illustrated-gpt2)
