@@ -126,15 +126,72 @@ References:
 1. The Illustrated Transformer: [link](https://jalammar.github.io/illustrated-transformer/).
 2. ChatGPT.
 
-## The Illustrated BERT, ELMo, and co.
+## The Illustrated BERT, ELMo, and co. (Transfer Learning in NLP)
+
+What makes BERT NLP's AlexNet+ImageNet moment: An outrageously large model is pre-trained on an outrageous amount of data, enabling generalized language understanding.
+1. Semi-supervised learning: BERT is pre-trained on a large amount of unlabelled data.
+2. Transfer learning: Fine-tuned on specific tasks to achieve SoTA on several benchmarks.
+3. The availability of pre-trained model parameters and training code makes it accessible to lay-people. 
+
+### Word Embeddings
+* Training the specialized $[\text{CLS}]$ token's embedding enabled BERT-scale generalized language sentence embeddings, which are quite useful for training simple and effective linear classifiers for off-the-shelf classification tasks.
+* ELMo: Context Matters
+  * GloVe and Word2Vec embeddings are context-free, i.e., they generate a distinct embedding for each word in the vocabulary.
+  * ELMo gained its language understanding super-powers by learning to predict the next word in a sequence (which can be trained using _massive_ amounts of online text data in an unsupervised manner).
+  * ELMo looks at the entire sentence, using a bi-directional LSTM (i.e., looking both ways), to compute word embeddings:
+    * Let input sequence be $\{x_1, x_2, ..., x_T\}$, where $T$ is the length of the input sequence.
+    * Bidirectional LSTM capture contextual information in both directions for each word.    
+      Let $h_f(t) = LSTM(x_t, h_f(t-1))$ and $h_b(t) = LSTM(x_t, h_b(t+1))$ be the forward and backward LSTMs, where:
+       - $x_t$ is the input word embedding at position $t$.
+       - $h_f(t)$ represents the hidden state of the forward LSTM at position $t$.
+       - $h_b(t)$ represents the hidden state of the backward LSTM at position $t$.
+    * Combining Contextual Representations: Concatenate the forward and backward hidden state activations at each biLSTM layer, and compute a linear combination with trainable weights:    
+      $E(t) = \gamma \cdot \sum_i^L s_i \cdot [h_f^i(t) || h_b^i(t)]$, where:
+       - $E(t)$ is the contextualized word embedding for $x_t$.
+       - $\gamma$ is a scalar (task-dependent) weight parameter.
+       - $s_i$ is a softmax normalized weight parameter to obtain a weighted sum over layer activations.
+       - $L$ is the number of layers in the BiLSTM.
+       - $h_f^i(t)$ and $h_b^i(t)$ are the forward and backward hidden state activations at layer $i$ for $x_t$.
+    * Word Embedding: The final embedding is a combination of the BiLSTM and the original word embedding:    
+      $ELMo(t) = E(t) + x_t$
+
+### Generative Pre-Trained Transformers
+
+Stacks decoders on top of decoders and trains in autoregressive manner, generating text in forward direction one token at a time. 
+
+* Lets go off the Transformer encoder-decoder stack, and works with only the transformer decoder. The decoder is a natural choice for language modeling (predicting the next word) since it’s built to mask future tokens – a valuable feature when it’s generating a translation word by word.
+* GPT-1 stacked 12 decoder layers, which trains well using only the vanilla self-attention from the decoder layers (with masking to avoid learning from future tokens).
+* Predicting the next word on WebText data using the simpler Decoder stack results in a model that generates coherent  text. This is why the GPT family is exceptionally good at generating long-form coherent text.
+* In constrast, BERT employs bidirectional context, and is trained on masked language modeling. Bidirectional modeling captures deeper contextual information, enabling BERT to perform well on a variety of downstream tasks.
+
+**A few (more) things about BERT**:
+* Masked language modeling is a clever way to train a bidirectional model in an autoregressive manner to learn deep contextual language modeling. Randomly mask $15\%$ of the input tokens and train the model to predict the masked words.
+* Another task that BERT is pre-trained on next sentence prediction. Given two sentences, predict if the second sentence is the subsequent sentence in the original corpus.
+* BERT for feature extraction: Pre-trained BERT can be used to generate contextualized word embeddings. The [CLS] token is especially useful for generating sentence embeddings.
+
+**A few thoughts from Seb Ruder**:
+* Pretrained word embeddings (word2vec/ GLoVe) only incorporate previous knowledge in the first model layer while the rest of the downstream network is trained from scratch. ELMo/ BERT/ GPT flipped this: use pre-trained embeddings with linear/ shallow networks trained from scratch.
+* Just like ImageNet, pre-training on a large corpus of text enables the model to learn general language understanding, which can be fine-tuned on specific tasks with very little data.
+* Language modeling is a good pre-training task.
+  * Predicting the most probable next word requires an ability to express grammatical syntax and also model semantics.
+  * It is an unsupervised and can be trained on massive amounts of data.
+  * It has been shown to capture many facets of language relevant for downstream tasks, such as long-term dependencies, hierarchical relations, and sentiment.
+  * Doing well on language modeling requires what could be considered _world knowledge_ or _common sense_.
+  *  Opens the door to developing models for previously under-served languages. For very low-resource languages where even unlabeled data is scarce, multi-lingual language models may be trained on multiple related languages at once.
+  * LLMs trained on language modeling as a pre-training task have been empirically shown to be extremely sample-efficient, achieving good performance with only hundreds of examples and are even able to perform zero-shot learning.
 
 
 References:
-1. [link](https://jalammar.github.io/illustrated-bert/)
-2. ChatGPT.
+1. The Illustrated BERT, ELMo, and co. [jay-alammar-blog](https://jalammar.github.io/illustrated-bert/).
+2. NLP's ImageNet moment has arrived [seb-ruder-blog](https://ruder.io/nlp-imagenet/).
+3. ChatGPT.
 
 ## The Illustrated GPT-2 (Visualizing Transformer Language Models)
-[link](https://jalammar.github.io/illustrated-gpt2)
+
+
+References:
+1. The Illustrated GPT-2. [jay-alammar-blog](https://jalammar.github.io/illustrated-gpt2).
+2. ChatGPT.
 
 ## A Visual Guide to Using BERT for the First Time
 [link](https://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/)
