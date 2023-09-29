@@ -208,6 +208,9 @@ Parameteric, discriminative, large-margin algorithms for both classification and
   where $K(x, x_i)$ is the kernel function that computes the inner product between the mapped feature vectors $\phi(x)$ and $\phi(x_i)$.    
   $\alpha_i$ are the Lagrange multipliers obtained during the optimization process.
 
+### Generalized Linear Models
+`TODO`
+
 ## Unsupervised Learning
 
 ### Principal Component Analysis (PCA)
