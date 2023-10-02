@@ -37,7 +37,7 @@ class Solution:
         result.append(newInterval)
         
         # After overlap = just insert intervals[i].
-        while i<len(intervals):
+        while i<N:
             result.append(intervals[i])
             i+=1
 
