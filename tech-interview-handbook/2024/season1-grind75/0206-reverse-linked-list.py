@@ -16,9 +16,25 @@ Space:
 #         self.next = next
 class Solution:
 
-    def reverseList(self,
-                    head: Optional[ListNode]) \
-                    -> Optional[ListNode]:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        curr = head
+        prev = None
+
+        while curr:
+
+            # Use a tmp pointer to exchange.
+            tmp = curr.next
+            curr.next = prev
+            prev = curr
+
+            # Move curr forward.
+            curr = tmp
+
+        return prev
+
+
+    def reverseList_(self, head: Optional[ListNode]) -> Optional[ListNode]:
 
         prev = None
         curr = head
