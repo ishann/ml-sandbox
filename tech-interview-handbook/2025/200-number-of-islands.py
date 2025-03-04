@@ -11,15 +11,14 @@ class Solution:
         
         num_islands = 0
         m, n = len(grid), len(grid[0])
-
+        
         def bfs(r, c):
             pass
 
         for y in range(m):
             for x in range(n):
                 if grid[y][x]=="1":
-                    queue.append((y,x))
-
+                    num_islands+=1
 
         return num_islands
 
