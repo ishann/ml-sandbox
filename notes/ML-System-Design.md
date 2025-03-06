@@ -1,3 +1,5 @@
+**NOTE: This requires a significant overhaul.$\newline$Starting with `bytebytego.com`.**
+
 # ML System Design
 
 ## High-level Ideas
