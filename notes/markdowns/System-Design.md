@@ -52,3 +52,68 @@ As a black-box what are `X` and `Y`? In some cases, the system may be complex an
 ![Different ways to specify the model's I/O.](./assets/ch1-04.png){width=80%}
 
 
+#### Choose the Right ML Paradigm
+
+Generally, the solution will involve supervised learning. However, do not assume this. Also, its important to drill down into whether its classification (binary vs. multi-label/ nominal vs. ordinal) or regression. Suprisingly, weakly supervised learning is not discussed at all.
+
+![Common ML categories. Significant miss: weakly supervised learning.](./assets/ch1-05.png){width=100%}
+
+
+### Data Preparation
+
+Data with predictive power is essential for ML. Two essential processes: Data Engineering and Feature Engineering.
+
+![Data preparation process.](./assets/ch1-06.png)
+
+#### $\rightarrow$ Data Engineering
+$\vspace*{1mm}$
+<p>Design and build pipelines for collecting/ storing/ retrieving/ processing data.</p>
+
+**Data Sources/ Data Storage**<br>
+
+Data Sources: Understanding the data source provides context for label hygiene/ noise and general reliability. Metadata tags alongwith data are often a valuable source of information.  
+
+Data Storage: Repository for peristently storing $+$ managing collections of data.
+
+![Types of databases.](./assets/ch1-07.png)
+
+Extract, Transform, and Load (ETL) consists of three phases:
+
+1. Extract: Extracts data from heterogenous data sources.
+2. Transform: Data is cleansed, mapped, and transformed to meet operational needs.
+3. Load: The transformed data is loaded into the target destination.
+
+Data Types: Structured and unstructured data, with a number of different sub-types exist.
+
+* Numerical: Discrete numbers.
+* Categorical: Names/ labels.
+  * Nominal: No numeric relationship.
+  * Ordinal: Ordering exists.
+
+![Types of data.](./assets/ch1-09.png){width=80%}
+
+
+|      | Structured | Unstructured |
+| :--- | :------    | :----        |
+| Characteristics   | - Predefined schema$\newline$- Easy to search | - No schema$\newline$- Difficult to search |
+|------------------------|------------------------------------------|------------------------------|
+| Resides in        | - Relational databases$\newline$- Many NoSQL databases can store structured data$\newline$- Data warehouses | - NoSQL databases$\newline$- Data lakes |
+|------------------------|------------------------------------------|------------------------------|
+| Examples          | - Dates$\newline$- Phone numbers$\newline$- Credit card numbers$\newline$- Addresses$\newline$- Names | - Text files$\newline$- Audio files$\newline$- Images$\newline$- Videos |
+Table: Summary of structured and unstructured data
+
+
+#### $\rightarrow$ Feature Engineering
+$\vspace*{1mm}$
+<p>Feature engineering process requires subject matter expertise and is highly dependent upon the task at hand. Two processes:</p>
+
+* Using domain knowledge to select and extract predictive features from raw data.
+* Transforming predictive features into a format usable by the model.
+
+Three important operations:
+* Handle missing data: delete or impute.
+* (Skewed) feature scaling. ML models (like SVMs) may struggle to learn when the features are in different ranges. Some models may struggle when a feature has a skewed distribution and the model expects each feature to be either linearly or normally distributed. Techniques: min-max-normalization, Z-score-standardization, log scaling, exponentiation, and discretization.
+* Encode categorical variables: integer encoding, one-hot encoding (fair for a small number of possible values), and embedding learning (overcomes one-hot encoding and provides a continuous manifold for representing data).
+
+Its important to generally look out for biases in the data. This should happen before Model Development begins.
+
