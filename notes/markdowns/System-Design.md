@@ -117,3 +117,74 @@ Three important operations:
 
 Its important to generally look out for biases in the data. This should happen before Model Development begins.
 
+### Model Development
+
+`NOTE`: It is an oversight on the author's part to not discuss (atleast) preliminary evaluation, say as a black-box for what the model is expected to be capable of doing well. Evaluation must be independent of Model Development and ideally, should precede model development. This sidesteps the scenario where we choose a model that is not well suited to all our business needs, and then overfit our evaluation to what it is capable of doing or worse, already does well.
+
+#### $\rightarrow$ Model Selection
+$\vspace*{1mm}$
+
+Select an appropriate ML model and train it to solve the task at hand:
+
+* Establish a simple baseline. Start with setting up a non-ML baseline (random chance/ median/ mode) which will help us set the lower bound for what a data-driven model is expected to outperform.
+* Experiment with simple models. After we have a baseline, explore ML algorithms that are quick to train (but might require more feature engineering). Then, try to get as far as possible without neural nets. This also allows us to start getting a sense of the data and what features are useful at the beginning of the dev cycle where we might not have a lot of data.
+* Switch to more complex models; embrace end-to-end learning.
+* Use an ensemble of models to improve performance.
+
+
+Considerations when choosing an ML model:
+
+* The amount of data the model needs.
+* Hyperparameter space complexity.
+* Possibility of continual learning.
+* Compute requirements (especially during inference).
+
+
+#### $\rightarrow$ Model Training
+$\vspace*{1mm}$
+
+Steps:
+
+* Constructing the dataset/ engineering features.
+* Selecting supervisory signals (crafting loss functions).
+* Training from scratch vs. fine-tuning.
+* Distributed training (important in big-tech).
+
+**Constructing the dataset**
+
+Steps:
+
+* Collect raw data. Discussed above.
+* Identify features and labels. Features depend on the task. Labels can be *labeled* in many ways
+  * Hand labeling: Reliable quality but slow and expensive. Can be reserved for either finetuning or for evaluating.
+  * Label mining: User activity can be transformed into supervision.
+* Sampling
+  * Convenience Sampling: Select participants/ datapoints who are readily accessible. Quick, but may lead to bias.
+  * Snowball Sampling: Existing datapoints recruit new datapoints. May introduce biases as the sample may not be representative of the entire population. 
+  * Stratified Sampling: Divide population into distinct subgroups, or strata, that share similar characteristics. Random samples are then drawn from each stratum, ensuring representation across key segments of the population. Enhances the accuracy and reliability of results, especially when analyzing diverse populations.
+  * Reservoir Sampling: A randomized algorithm is used for selecting a random sample of `k` items from a population of unknown size `n`. Useful when dealing with data streams or when the total population size is not known in advance.
+  * Importance Sampling: A statistical technique used to estimate properties of a particular distribution while only having samples generated from a different distribution. Employed when direct sampling is challenging, allowing for the evaluation of expectations under one distribution by using samples from another.
+* Address class imbalance while making sure that train-tune-test splits have the same ratios.
+  * Undersampling majority class.
+  * Oversampling minority class.
+  * Address during optimization by re-weighting the loss. Popular choices are $\frac{1}{n}$ and $\frac{1}{n\log n}$ and the focal loss ($(1-p_k)^\gamma$ where usually $\gamma=2$).
+
+![Dataset construction steps.](./assets/ch1-15.png)
+
+**Choose supervisory signals/ loss functions**
+
+The loss function allows the optimization to update the model’s parameters during learning. With end-to-end learning crafting the right loss becomes extremely important. Domain knowledge and business needs must inform the design of loss functions.
+
+Often, figuring this out is as fun (if not more) as choosing the right neural network and throwing transformers at the problem. It does require reliable engineers who know what they are doing.
+
+**Distributed Training**
+
+Two methods: Data parallelism and model parallelism. Data parallelism involves replicating the entire model across multiple devices, with each device processing a different subset of the data simultaneously; gradients from each device are then aggregated to update the model parameters collectively. Model parallelism partitions a single model across multiple devices, where each device is responsible for computing a portion of the model's operations, making it suitable for models too large to fit into a single device's memory.
+
+Generally, unless we're training LLMs, data parallelism (in the form of multi-GPU training) is sufficient.
+
+
+### Evaluation
+
+This is too simplistic. Instead, read [Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning](https://arxiv.org/abs/1811.12808) by Raschka.
+
