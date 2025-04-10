@@ -186,5 +186,125 @@ Generally, unless we're training LLMs, data parallelism (in the form of multi-GP
 
 ### Evaluation
 
-This is too simplistic. Instead, read [Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning](https://arxiv.org/abs/1811.12808) by Raschka.
+Two types:
 
+* Offline Eval: During learning and tuning. Generally, the MLE will decide these.
+* Online Eval: During monitoring after deployment. Generally, business needs/ objectives will inform these.
+
+This is too simplistic. There's not much to learn from what is discussed by the authors. Instead, read [Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning](https://arxiv.org/abs/1811.12808) by Raschka.
+
+
+### Deployment and Serving
+
+Aspects:
+
+* Cloud vs. on-device deployment
+* Model compression
+* Testing in production
+* Prediction pipeline
+
+#### $\rightarrow$ Cloud vs. on-device deployment
+$\vspace*{1mm}$
+
+* Cloud is simpler to deploy to compared to on-device deployment.
+* Inference is faster on the cloud and has fewer hardware constraints.
+* Network latency makes on-device deployment more appropriate.
+* On-device deployment ensures user privacy.
+
+#### $\rightarrow$ Model compression
+$\vspace*{1mm}$
+
+Make models smaller to reduce inference latency and compute requirement. Three techniques:
+
+* Knowledge distillation: Train a small (student) model to mimic a larger (teacher) model.
+* Pruning: Zero-ing out the least useful parameters. Leads to sparser models.
+* Quantization: Use fewer bits to represent the parameters, leading to quantization of network parameters.
+
+#### $\rightarrow$ Testing in production
+$\vspace*{1mm}$
+
+The ultimate way to ensure real-world performance is to test the model with real traffic. Commonly used techniques include shadow deployment, A/B testing, canary release, interleaving experiments, and bandits, etc.
+
+**A/B Testing**
+
+Deploy the new model in parallel with the existing model. Two important factors to consider:
+
+* Traffic routed to each model has to be random.
+* A/B tests should be run on a sufficient number of users/ data points for the results to be legitimate. `5%`/`95%` is a reasonable split.
+
+**Interleaving Experiments**
+
+* Merge outputs from two or more models into a single, combined result. User interactions with interleaved output are then analyzed to infer preferences between the models.
+* Offers higher sensitivity compared to traditional A/B testing, allowing for more rapid and nuanced comparisons.
+* Particularly useful in scenarios like search engine result rankings or recommendation systems, where subtle differences between models can significantly impact user experience.
+* Best suited for direct, pairwise comparisons where the goal is to detect subtle performance differences between models. Provide quick insights, but are typically limited to comparing two models at a time.​
+
+**Multi-Armed Bandits**
+
+* Address the exploration-exploitation dilemma by dynamically allocating traffic to different models based on their performance.
+* Useful to balance the introduction of new models (exploration) with the utilization of established, high-performing models (exploitation).
+* Enables continuous monitoring and adjustment, facilitating real-time responses to model performance variations and reducing the need for manual intervention 
+* Ideal for scenarios involving multiple models or strategies, where the objective is to maximize overall performance over time. Effective in dynamically changing environments, allowing for continuous adaptation to new data or user behaviors.​
+
+**Shadow Deployment**
+
+* Deploy the new model in parallel with the existing model. Incoming requests are routed to both models, but only the existing model's prediction is served to the user.
+* This minimize the risk of unreliable predictions but, is a costly approach that doubles the compute requirements.
+
+#### $\rightarrow$ Prediction pipeline
+$\vspace*{1mm}$
+
+Two types: batch predictions and online predictions.
+
+* Batch predictions involve generating predictions for a large set of data periodically. Typically employed when immediate results are not critical, and predictions can be made in bulk.
+* Batch Predictions are used in the following scenarios:
+  * Non-Time-Sensitive Tasks: Predictions are not required in real-time, such as generating nightly reports or updating recommendation systems periodically. ​
+  * Large-Scale Data Processing: Larger volumes can be processed more efficiently in bulk.
+  * Resource Optimization: Compute on intensive tasks can be optimized by scheduling during off-peak hours, thereby reducing costs and balancing load. 
+* Advantages of Batch Predictions:
+  * Efficiency: Processing large datasets collectively can be more resource-efficient than handling numerous individual requests. ​
+  * Simpler Infrastructure: Batch processing systems are generally less complex, as they don't require the low-latency infrastructure needed for real-time predictions. ​
+* Disadvantages of Batch Predictions:
+  * Latency: Not suitable for applications requiring immediate predictions. ​
+  * Data Staleness: Predictions may become outdated between processing intervals, which is problematic in dynamic environments. 
+* Online (or real-time) pipelines generate predictions on-demand, processing individual data points as they arrive. Essential for applications where timely responses are critical, such as fraud detection or personalized user experiences. 
+* When Online Predictions Are Preferred:
+  * Immediate Response Required: Applications like real-time bidding in advertising or instant recommendation systems. ​
+  * Rapidly Changing Data: Environments where data evolves quickly, necessitating up-to-date predictions.
+  * All interactive systems are online predictors.
+
+Trade-offs:
+* Complexity vs. Latency: Online systems require more complex infrastructure to handle low-latency demands, whereas batch systems are simpler but introduce latency due to their scheduled nature. ​
+* Resource Allocation: Batch processing can be scheduled during low-demand periods to optimize resource usage, while online systems must maintain resources to handle peak loads at any time. ​
+
+The choice between batch and online prediction pipelines depends on the specific requirements of the application, including the need for immediacy, resource availability, and the nature of the data being processed.​
+
+### $\rightarrow$ Monitoring and Infrastructure
+
+NOTE: Like the evaluation section, this section lacks depth. Online evaluation and continual learning are critical for real-world ML systems.
+
+**Why systems fail**
+
+* Data distribution drift: The data a model encounters in production differs from that it encountered during training.
+  * We must continuously model the online data distribution and compare it to the training data distribution. 
+  * Training on large datasets to learn a comprehensive distribution helps. 
+  * Regularly retraining the model using labeled data from the new distribution helps more.
+  * Personalizing models to subsets of users based on demographics and evolving preferences helps _even_ more.
+* Concept drift: A change in the underlying data distribution or the target concept over time in real-world ML systems, i.e., the relationship between input features and the target variable evolves, which can negatively impact model performance if not addressed.
+  * Example: financial market prediction. A model that forecasts stock prices based on historical trends might gradually lose accuracy as market conditions, investor behavior, and regulatory environments shift. Hence, the relationship between market indicators and price movements changes, representing concept drift.
+  * Concept drift is more tricky to model directly compared to data drift and requires the model to be updated or retrained to capture new patterns. It may even require major changes to the design of the underlying ML model and feature engineering techniques.
+
+**What to monitor**
+
+Detect failures and identify shifts in the ML system. Two categories:
+
+* Operational metrics: Ensure the system is up and running: average serving time, throughput, number of prediction requests, CPU/GPU utilization, etc.
+* ML metrics:
+  * Monitoring inputs/outputs. Avoid garbage-in-garbage-out. Monitoring the model’s input and outputs is vital.
+  * Drifts. Inputs to the system and the model’s outputs are monitored to detect changes in their underlying distribution.
+* Business metrics. Real-world systems must make sure that business needs are met. Neither operational nor ML metrics are useful when business need fails. 
+
+
+### Takeaway
+
+No engineer can be an expert in every aspect of the ML lifecycle. Some engineers specialize in deployment and production, while others specialize in model development. Data science generally requires more data engineering, while applied ML focuses more on model development and productionization. A (successful) candidate should seek to drive the conversation, while being ready to go with the interviewer’s flow. This is why frameworks like the one discussed in this document help.
