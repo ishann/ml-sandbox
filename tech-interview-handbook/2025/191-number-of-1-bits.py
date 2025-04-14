@@ -11,6 +11,6 @@ class Solution:
             num_ones += int(n%2)
             n /= 2
             # This makes it super fast:
-            # n = n >> 1d
+            # n = n >> 1
 
         return num_ones
