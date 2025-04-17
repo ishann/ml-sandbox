@@ -1,6 +1,5 @@
 ---
 title: "DTs-RFs-GB-XGB"
-author: "Ishan"
 output:
   pdf_document:
     latex_engine: pdflatex
@@ -76,21 +75,51 @@ Given $K$ candidates, $C_k$,  derived by iteratively pruning an overfit tree, a 
 
 # Random Forests
 
-Make sure to discuss BAgging and Boosting.
+`DT`s are easy to build, easy to use, and easy to interpret. But accuracy is an issue; they overfit to the training data but are not flexible when generalizing to unseen data. Random Forests (`RF`s) combine the simplicity of `DT`s with flexibility resulting in a vast improvement in generalization ability.
 
 
-# Gradient Boosting
+## Building Random Forests (BAgging)
+
+Steps to convert a `DT` into an `RF`:
+
+1. Create a bootstrapped dataset: randomly subsample (with replacement) from the training data.
+2. Build a `DT` using a random subset of features from the bootstrapped dataset. The feature sampling occurs at each step of building the `DT`.
+3. Go to #1. Repeat to generate multiple `DT`s from subsets of boths features and data.
+4. During inference, each `DT` can vote (classification) for, or contribute to the mean (regression) of, the final aggregated prediction.
+
+This method of bootstrapping to build `DT`s and aggregating predictions is known as BAgging.
+
+`NOTES`
+
+1. Bootstrapping (sampling with replacement) will cause some samples to never be chosen. These $\texttt{out of bag}$ samples can be used to measure the generalization ability of the `RF`.
+2. The $\texttt{out of bag}$ samples can also be used to tune hyperparameters such as the probability of sampling with replacement, and the number of features sampled for building the individual `DT`s.
 
 
+## Handling Missing Data
 
+Missing data can occur both during learning and during inference.
 
-# XGBoost
+### Missing data during learning
 
+Make an initial guess and interatively refine it until we (hopefully) arrive at a better guess.
 
+* Initial guess heuristic: for a missing feature value ($x_{ij}$), filter the entire by its label value ($Y_i$) and the initial guess becomes the mode (categorical)/ median (continuous) of filtered feature values ($x_{kj}$) for all $Y_i==Y_k$.
+* With initial guesses filled in, build an `RF`.
+* Build a proximity matrix $P$ (sample similarity matrix in the `RF` observation space): Run inference on all samples using all the `DT`s. Every sample that ends at a leaf node of a `DT` is similar to any another sample ending at the same leaf node of a `DT`. Use these proximities to populate a proximity matrix for all samples over all `DT`s and normalize it to $[0,1]$.
+* For any missing feature ($x_{ij}$ with $j^{\text{th}}$ missing feature for sample $x_i$), compute weighted voting (classification)/ mean (regression) as follows:
+  * Let $M_j$ be the index set of samples with observed feature $j$: $M_j=\{i\in\{1,...,N\}: x_{ij} \text{is observed}\}$.
+  * The standard proximity weighted impution for missing $x_{ij}$ is: $\displaystyle \hat{x}_{ij} = \frac{\sum_{l \in M_j} P_{il}\,x_{lj}}{\sum_{l \in M_j} P_{il}}$, where $x_ {lj}$ contributes proportionally to how “close” sample  $l$ is to sample $i$ under the forest’s learned structure.
+  * The aggregation becomes voting instead of summation for classification tasks.
 
+## Similarity/ Sample Clustering 
 
-# Interpretability
+* The proximity matrix can be used as a similarity matrix in the `RF`s output space and used for measuring similarity/ clustering/ visualization.
+* The proximity matrix can be negated to form a distance matrix. This allows us to work with heterogenous data and arrive at a distance matrix in the `RF`s output space.
 
+## Mising data during inference
+
+* Create duplicates of the sample with missing feature and label with all possibilities.
+* Run through the `RF` and use the above method to aggregate and find the most likely value of the missing feature based on the simulated values. 
 
 
 References:
