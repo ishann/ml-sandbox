@@ -18,7 +18,7 @@ geometry: top=.75in, bottom=.75in, left=1in, right=1in
 
 ## Information Gain/ Entropy/ Gini Impurity
 
-Decision criterions for choosing a feature to add to a DT.
+Decision criterions for choosing a feature to add to a `DT`.
 
 ### Entropy
 
@@ -119,7 +119,7 @@ Make an initial guess and interatively refine it until we (hopefully) arrive at 
 ## Mising data during inference
 
 * Create duplicates of the sample with missing feature and label with all possibilities.
-* Run through the `RF` and use the above method to aggregate and find the most likely value of the missing feature based on the simulated values. 
+* Run through the `RF` and use the above method to aggregate and find the most likely value of the missing feature based on the candidate which results in being closest to the label possibilities. 
 
 # AdaBoost (in a hurry)
 
@@ -143,7 +143,7 @@ AdaBoost (Adaptive Boosting) is a meta‑algorithm that combines many weak learn
 
 # Gradient Boosting
 
-Gradient Boosting (`GB`) is an ensemble technique that builds a prediction model in a stage‑wise fashion by sequentially fitting weak learners to the negative gradient of a chosen loss function, enabling direct optimization of arbitrary differentiable losses. Rather than reweighting samples (like AdaBoost), `GB` fits each new learner to the negative gradient (pseudo‑residual) of the loss function with respect to the current model’s predictions.
+Gradient Boosting (`GB`) is an ensemble technique that builds a prediction model in a stage‑wise fashion by sequentially fitting weak learners to the negative gradient of a chosen loss function enabling direct optimization of arbitrary differentiable losses. Rather than reweighting samples (like AdaBoost), `GB` fits each new learner to the negative gradient (pseudo‑residual) of the loss function with respect to the current model’s predictions.
 
 ## Algorithm
 
@@ -188,27 +188,77 @@ All three are popular and can give slight edges on different benchmarks. Picking
 
 # XGBoost
 
+Gradient Boosting optimized over more than a decade.
+
+### Installation
+
+`pip install xgboost`
+
+### API usage
+
+`import xgboost as xgb`    
+`from xgboost import XGBClassifier, XGBRegressor`    
+`model = XGBClassifier()  # or XGBRegressor()`    
+`model.fit(X_train, y_train)`    
+`y_pred = model.predict(X_test)`    
+
+### Core Components
+
+| Concept      | Explanation                                                                                  |
+|--------------|----------------------------------------------------------------------------------------------|
+| Booster      | Core model that learns: `'gbtree'` (default, trees) / `'dart'` (dropout trees) / `'gblinear'` (linear model) |
+| Objective    | Loss function you minimize (`'binary:logistic'`, `'multi:softprob'`, `'reg:squarederror'`, etc.) |
+| Base Score   | Initial prediction score before boosting (default 0.5 for classification)                     |
+
+
+### Hyperparameters
+
+| Category           | Parameter           | Role                                                                   | Typical Range          |
+|--------------------|---------------------|------------------------------------------------------------------------|------------------------|
+| Model Complexity   | max_depth           | Max tree depth                                                         | 3–12                   |
+|                    | min_child_          | Min sum of instance weight (hessian) needed in a                       | 1–10                   |
+|                    | _weight             | child                                                                  | 
+|                    | gamma               | Min loss reduction to make a split                                     | 0–5                    |
+|                    | lambda              | L2 regularization                                                      | 0–100                  |
+|                    | alpha               | L1 regularization                                                      | 0–100                  |
+| Training Dynamics  | learning_rate (eta) | Step shrinkage                                                         | 0.01–0.3               |
+|                    | n_estimators        | Number of trees                                                        | 100–10,000             |
+|                    | subsample           | Row sampling per tree                                                  | 0.5–1                  |
+|                    | colsample_bytree    | Feature sampling per tree                                              | 0.5–1                  |
+| Imbalanced Data    | scale_pos_weight    | Balancing positive/negative classes                                    | (#neg / #pos)          |
+| Tree Construction  | grow_policy         | How trees grow: `'depthwise'` (default), `'lossguide'` (for large datasets) | —                      |
 
 
 
+Rule of thumb:
+
+* Decrease `learning_rate` → increase `n_estimators`.
+* Deeper trees (`max_depth`) → more complex models, more overfitting.
+* Use `early_stopping_rounds` when tuning to avoid overfitting.
 
 
+### Common Mistakes to Avoid
+
+| Mistake                                                     | How to Avoid                                                                 |
+|-------------------------------------------------------------|-------------------------------------------------------------------------------|
+| Setting `n_estimators` too high without `early_stopping`    | Always combine with early stopping                                           |
+| Forgetting regularization (`lambda`, `alpha`)               | Especially for deep trees                                                    |
+| Not tuning `scale_pos_weight` for imbalanced classification | Always check class balance                                                   |
+| Using default `learning_rate=0.3` for large datasets         | Reduce to 0.05 or 0.01                                                       |
+| Ignoring categorical features                                | XGBoost does not natively handle categoricals — you must one-hot encode or label encode |
 
 
+### Feature Engineering/ Best Practices
 
+See [xgboosting.com](https://xgboosting.com/feature-engineering-for-xgboost/?utm_source=chatgpt.com) for a superset of everything one might need.
 
+$\vspace*{100mm}$
 
-
-
-
-
-
-
-References:
+# References:
 
 1. Decision and Classification Trees [statquest](https://www.youtube.com/watch?v=_L39rN6gz7Y&list=PLblh5JKOoLUKAtDViTvRGFpphEc24M-QH)
 2. Random Forests [statquest](https://www.youtube.com/watch?v=J4Wdy0Wc_xQ&list=PLblh5JKOoLUIE96dI3U7oxHaCAbZgfhHk)
 3. Gradient Boosting [statquest](https://www.youtube.com/watch?v=3CC4N4z3GJc&list=PLblh5JKOoLUJjeXUvUE0maghNuY2_5fY6)
 4. XGBoost [statquest](https://www.youtube.com/watch?v=OtD8wVaFm6E&list=PLblh5JKOoLULU0irPgs1SnKO6wqVjKUsQ)
 5. Decision Forests [google-dev](https://developers.google.com/machine-learning/decision-forests)
-6. Interpretable ML with XGBoost [medium](https://medium.com/data-science/interpretable-machine-learning-with-xgboost-9ec80d148d27)
+6. Feature Engineering/ Best Practices [xgboosting.com](https://xgboosting.com/feature-engineering-for-xgboost/?utm_source=chatgpt.com)
