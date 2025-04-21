@@ -121,6 +121,88 @@ Make an initial guess and interatively refine it until we (hopefully) arrive at 
 * Create duplicates of the sample with missing feature and label with all possibilities.
 * Run through the `RF` and use the above method to aggregate and find the most likely value of the missing feature based on the simulated values. 
 
+# AdaBoost (in a hurry)
+
+AdaBoost (Adaptive Boosting) is a meta‑algorithm that combines many weak learners — typically decision stumps — into a single strong classifier by iteratively reweighting training examples so that each new learner focuses on the mistakes of its predecessors.
+
+## How it works
+
+* Init sample weights: Assign each of the $N$ training examples a weight $w_{i,1}=1/N$.
+* Iterate through trees $t=1,...,T$:
+  * Train a weak learner $h_t(x)$ to minimize the weighted error: $\epsilon_t=\Sigma_{i=1}^N w_{i,t} \text{\textbf{1}}\{h_t(x_i)\neq y_i\}$.
+  * Compute its importance: $\alpha_t=\frac{1}{2}\ln(\frac{1-\epsilon_t}{\epsilon_t})$.
+  * Update weights as: $w_{i,t+1}=\frac{w_{i,t}\exp(-\alpha_t y_i h_t(x_i))}{\Sigma_j w_{j,t}\exp(-\alpha_t y_j h_t(x_j))}$.
+* Combine weak learners: $H(x)=\text{sign}(\Sigma_{t=1}^T\alpha_t h_t(x))$.
+
+`NOTE`:
+
+1. AdaBoost builds an additive model while greedily minimizing the exponential loss.
+2. The weak learners are usually stumps (`DT`s with one root and two leaves), but can be any weak estimator.
+3. While often robust to overfitting (even as $T$ grows), AdaBoost is sensitive to noisy labels and outliers, since misclassified points gain ever‑increasing weight.
+
+
+# Gradient Boosting
+
+Gradient Boosting (`GB`) is an ensemble technique that builds a prediction model in a stage‑wise fashion by sequentially fitting weak learners to the negative gradient of a chosen loss function, enabling direct optimization of arbitrary differentiable losses. Rather than reweighting samples (like AdaBoost), `GB` fits each new learner to the negative gradient (pseudo‑residual) of the loss function with respect to the current model’s predictions.
+
+## Algorithm
+
+(Apologies for the math that follows. But, it's really interesting to see how `DT`s have gone from piecewise linear functions to now performing gradient descent!) 
+
+* `GB` constructs an additive model: $H_M(x)=\Sigma_{m=1}^M \gamma_m h_m(x)$ where each $h_m$ is a weak learner fit to correct the errors of $h_1,...,h_{m-1}$ and $\gamma_m$ is a step size associated with the learners.
+* At iteration $m$, `GB` finds $h_m$ that minimizes the risk: $h_m = \arg\min_{h} \sum_{i=1}^n \ell(y_i, H_{m-1}(x_i) + h(x_i))$.
+  * A first order Taylor expansion around $H_{m-1}(x_i)$ leads to fitting $h_m$ around the gradients and gives us the pseudo-residual $r_{im} = -\left.\frac{\partial \ell(y_i, \hat{y})}{\partial \hat{y}}\right|_{\hat{y} = H_{m-1}(x_i)}$. Here, $\ell(y_i, \hat{y}_i)$ is the loss function (like `MSE`/ `BCE`) and $H_{m-1}(x_i)$ is the model's prediction at the previous iteration ($m-1$).
+  * This negative gradient indicates the direction in which the model's predictions should be adjusted to minimize the loss function.​
+  * Simple example: If we use the squared error as a loss function for regression ($\ell(y, \hat{y})=\frac{1}{2}(y-\hat{y}^2)$), the derivative with respect to $\hat{y}$ is $\hat{y}-y$ and the pseudo-residual becomes $r_{im}=y_i-H_{m-1}(x)$. So the pseudo-residual is the actual residual.
+* For $m=1,...,M$:
+  * Compute pseudo-residuals $r_{im}$.
+  * Fit a regression tree $h_m(x)$ to $\{(x_i,r_{im})\}$.
+  * Compute leaf-wise optimal step sizes $\gamma_{jm}$ for each leaf $R_{jm}$:$\newline\hspace*{35mm}\gamma_{jm} = \arg\min_{\gamma} \sum_{x_i \in R_{jm}} \ell(y_i, H_{m-1}(x_i) + \gamma)$
+  * Update: $\newline\hspace*{35mm}H_m(x) = F_{m-1}(x) + \nu \sum_{j=1}^{J_m} \gamma_{jm} \mathbf{1}_{\{x \in R_{jm}\}}$ $\newline$, where $\nu$ is the learning rate.
+
+## Regularization
+
+* Shrinkage (Learning Rate): A factor $\nu\in(0,1]$ multiplies each tree’s contribution, slowing learning and improving generalization. Typical values are $0.01-0.1$.
+* Subsampling (Stochastic Gradient Boosting): At each iteration, fit trees on a random subsample of the data (without replacement). This reduces variance and speeds up training.
+* Tree‑specific Regularization:
+  * Max depth / leaf count: Constrains tree complexity.
+  * Minimum samples per leaf / split: Enforces a minimum number of samples.
+
+
+## Popular Implementations
+
+* XGBoost
+  * Second‑order Taylor approximation: uses both the gradient and the hessian to compute updates.
+  * Sparse optimization: handles missing values efficiently.
+  * Out‑of‑core and distributed training.
+* LightGBM
+  * Histogram‑based splitting: buckets continuous features into discrete bins.
+  * Gradient‑based One‑Side Sampling (GOSS): prioritizes data points with large gradients.
+  * Exclusive Feature Bundling (EFB): combines mutually exclusive features to reduce dimensionality.
+* CatBoost
+  * Ordered boosting: reduces target leakage when handling categorical features via permutation-driven training.
+  * Symmetric trees: enforce balanced splits for faster, more stable training.
+  * Native categorical encoding: automatically handles high‑cardinality features
+
+All three are popular and can give slight edges on different benchmarks. Picking one and learning to tune it well is generally a good idea.
+
+# XGBoost
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 References:
 
