@@ -1,0 +1,16 @@
+# Ignore everything in the data directory
+data/*
+
+# Ignore everything in the outputs directory
+outputs/*
+
+# Ignore .DS_Store (common on macOS)
+.DS_Store
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+
