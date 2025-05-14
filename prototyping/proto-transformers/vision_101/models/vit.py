@@ -23,7 +23,7 @@ class PatchEmbedding(nn.Module):
         Tensor of shape (batch_size, num_patches, embed_dim)
     """
 
-    def __init__(self, img_size=32, patch_size=8, in_channels=3, embed_dim=64):
+    def __init__(self, img_size=32, patch_size=1, in_channels=3, embed_dim=1024):
         super().__init__()
 
         # A Conv2d layer to split the image into non-overlapping patches
@@ -166,7 +166,7 @@ class VisionTransformer(nn.Module):
         num_classes=10,
         embed_dim=64,
         depth=6,
-        num_heads=8,
+        num_heads=16,
         mlp_dim=128,
     ):
         super().__init__()

@@ -2,7 +2,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
-def get_data_loaders(dataset='cifar10', batch_size=64, num_workers=1):
+def fetch_data_loaders(dataset='cifar10', batch_size=64, num_workers=0):
     """
     Returns PyTorch DataLoaders for CIFAR-10 or CIFAR-100 datasets with standard preprocessing.
 
@@ -17,6 +17,17 @@ def get_data_loaders(dataset='cifar10', batch_size=64, num_workers=1):
         trainloader (DataLoader): DataLoader for the training set.
         testloader (DataLoader): DataLoader for the test set.
         num_classes (int): Number of classes in the dataset (10 for CIFAR-10, 100 for CIFAR-100).
+    
+    NOTES:
+    1. macOS uses the spawn method for multiprocessing by default (not fork).
+       This leads to issues with PyTorch's multiprocessing.
+       PyTorch disables num_workers>0 on MPS backend intentionally due to known instability/crashes.
+    2. Setting num_workers=0 is faster than num_workers=1.
+       On macOS, spawning a process for a single worker is costly.
+       That process has to serialize the dataset object, potentially triggering overheads with
+       shared memory and inter-process communication. Since PyTorch’s multiprocessing isn't
+       fully compatible with MPS/macOS, performance may degrade or even silently fail. The slowdown is
+       likely due to the cost of starting the subprocess + serialization overhead with no real gain.
     """
 
     transform_train = transforms.Compose([
