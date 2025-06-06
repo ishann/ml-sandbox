@@ -1,9 +1,7 @@
 from time import time as tick
-from models.vit import VisionTransformer
 from utils.data_loader import fetch_data_loaders
 from utils.train import train
 from utils.config import Config
-
 import torch
 
 def main():
@@ -28,7 +26,13 @@ def main():
     # Model setup.
     model_setup_start_time = tick()
     print("Train.")
-    model = VisionTransformer(num_classes=num_classes).to(device)
+
+    if config.model=="ResNet18":
+        from models.resnet import ResNet18
+        model = ResNet18().to(device)
+    elif config.model=="TinyViT":
+        from models.vit import VisionTransformer
+        model = VisionTransformer(num_classes=num_classes).to(device)
     print(f"Model setup took {tick() - model_setup_start_time:.2f} seconds.")
 
     # Learn.

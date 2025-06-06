@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
+import ipdb
 
+DEBUG = False
 
 class PatchEmbedding(nn.Module):
     """
@@ -35,6 +37,9 @@ class PatchEmbedding(nn.Module):
         )
 
     def forward(self, x):
+
+        if DEBUG:
+            ipdb.set_trace()        
         # x: (B, C, H, W) - input image tensor
 
         # Applies Conv2d to divide image into patches and embed them
@@ -73,6 +78,10 @@ class MultiHeadSelfAttention(nn.Module):
         # Expects input shape: (seq_len, batch_size, embed_dim)
 
     def forward(self, x):
+
+        if DEBUG:
+            ipdb.set_trace()
+
         x = x.transpose(0, 1)
         # Transpose to (seq_len, batch_size, embed_dim) for MultiheadAttention
 
@@ -121,6 +130,9 @@ class TransformerEncoderBlock(nn.Module):
         )
 
     def forward(self, x):
+
+        if DEBUG:
+            ipdb.set_trace()
 
         # Apply attention to normalized input, then add residual connection
         x = x + self.attn(self.norm1(x))
@@ -197,8 +209,16 @@ class VisionTransformer(nn.Module):
         # Linear classification head that maps the CLS token to class logits
         self.head = nn.Linear(embed_dim, num_classes)
 
+        if DEBUG:
+            ipdb.set_trace()
+
 
     def forward(self, x):
+
+        if DEBUG:
+            ipdb.set_trace()
+
+        #ipdb.set_trace()
 
         # Convert input image into a sequence of patch embeddings
         # Shape: (B, num_patches, embed_dim)

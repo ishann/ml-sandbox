@@ -6,7 +6,10 @@ class Config:
         parser.add_argument(
             "--dataset", type=str, default="cifar10", choices=["cifar10", "cifar100"]
         )
-        parser.add_argument("--batch_size", type=int, default=64)
+        parser.add_argument(
+            "--model", type=str, default="TinyViT", choices=["TinyViT", "ResNet18"]
+        )
+        parser.add_argument("--batch_size", type=int, default=512)
         parser.add_argument("--num_workers", type=int, default=0)
         parser.add_argument("--epochs", type=int, default=50)
         parser.add_argument("--lr", type=float, default=1e-3)
@@ -17,6 +20,7 @@ class Config:
 
         # Set class attributes from the parsed arguments
         self.dataset = args.dataset
+        self.model = args.model
         self.batch_size = args.batch_size
         self.epochs = args.epochs
         self.lr = args.lr
@@ -26,6 +30,7 @@ class Config:
         # Print the config values to stdout
         print("Configuration:")
         print(f"Dataset: {self.dataset}")
+        print(f"Model: {self.model}")
         print(f"Batch size: {self.batch_size}")
         print(f"Number of workers: {self.num_workers}")
         print(f"Epochs: {self.epochs}")
