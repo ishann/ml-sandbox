@@ -1,0 +1,21 @@
+[project]
+name = "text2ppt"
+version = "0.1.0"
+description = "CLI tool to convert text into a PPT with optional image generation using Dall-E-2."
+authors = [{name = "Ishan", email = "ishannigam@gmail.com"}]
+requires-python = ">=3.9"
+
+dependencies = [
+    "pymupdf",
+    "openai",
+    "python-pptx",
+    "python-dotenv",
+    "spacy",
+    "transformers",
+    "requests",
+    "tqdm",
+    "torch",
+    "diffusers",
+    "safetensors",
+    "accelerate"
+]

@@ -1,0 +1,69 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+
+# Virtual environments
+env/
+venv/
+.env/
+.venv/
+
+# Environment and secrets
+.env
+.tokens.py
+*.token
+*.secret
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+*.ipynb~
+
+# VSCode / PyCharm / JetBrains IDEs
+.vscode/
+.idea/
+
+# Logs and outputs
+*.log
+*.out
+*.err
+
+# Data and models
+# Need to commit the data folder for reproducibility.
+#data/
+#**/data/
+*.csv
+*.tsv
+*.json
+*.xlsx
+*.parquet
+*.feather
+*.h5
+*.npy
+*.npz
+
+# Hugging Face and model artifacts
+*.ckpt
+*.pt
+*.bin
+*.safetensors
+*.onnx
+*.pb
+*.tflite
+
+# Weights, checkpoints, experiment runs
+checkpoints/
+runs/
+outputs/
+results/
+
+# Cached downloads and intermediates
+.cache/
+*.tmp
+*.bak
+
+# Mac/Windows/Linux system files
+.DS_Store
+Thumbs.db
